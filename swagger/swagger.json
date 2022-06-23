@@ -1,26 +1,26 @@
 {
     "swagger": "2.0",
     "info": {
-      "title": "Pink Elephant Creation APIs",
-      "description": "API endpoints meant for customers to access products, as well as those authorized to access inventory, designs, and updating products.",
+      "title": "Cold Case Matching Game API",
+      "description": "API endpoints to retrieve information such as cold case data, matching game score list, and game information.",
       "version": "1.0.0"
     },
     "host": [
-      "cse341-project2-week8.herokuapp.com"
+      "duncan-moses-final-project.herokuapp.com"
     ],
     "basePath": "/",
     "tags": [
       {
-        "name": "Products",
-        "description": "API endpoints for Products collection."
+        "name": "Game",
+        "description": "All API endpoints related to the game collection."
       },
       {
-        "name": "Inventory",
-        "description": "API endpoints for Inventory collection"
+        "name": "Cold Case",
+        "description": "API endpoints for retrieving data on cold cases"
       },
       {
-        "name": "Designs",
-        "description": "API endpoints for Designs collection"
+        "name": "Score / Leaderboard",
+        "description": "API endpoints for adding, removing, updating and getting scores."
       }
     ],
     "schemes": [
@@ -28,19 +28,12 @@
       "http"
     ],
     "paths": {
-      "/api-docs": {
-        "get": {
-          "description": "",
-          "parameters": [],
-          "responses": {}
-        }
-      },
-      "/products": {
+      "/case": {
         "get": {
           "tags": [
-            "Products"
+            "Cold Case"
           ],
-          "description": "Get all product items in collection",
+          "description": "Get all cold cases in the collection",
           "parameters": [],
           "responses": {
             "200": {
@@ -53,9 +46,9 @@
         },
         "post": {
           "tags": [
-            "Products"
+            "Cold Case"
           ],
-          "description": "Create a product item in the product collection",
+          "description": "Create a new cold case. (used for people authorized to create case files.)",
           "parameters": [
             {
               "name": "body",
@@ -63,25 +56,37 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
+                  "case-name": {
+                    "example": "Baker Co John Doe 1995"
+                  },
+                  "summarized-case-description": {
                     "example": "any"
                   },
-                  "description": {
+                  "case-type": {
+                    "example": "homicide; missing persons, etc."
+                  },
+                  "victim-picture": {
                     "example": "any"
                   },
-                  "category": {
+                  "victim-name": {
                     "example": "any"
                   },
-                  "type": {
+                  "victim-age": {
                     "example": "any"
                   },
-                  "size": {
+                  "date-body-found": {
                     "example": "any"
                   },
-                  "color": {
+                  "location": {
                     "example": "any"
                   },
-                  "price": {
+                  "status": {
+                    "example": "unsolved"
+                  },
+                  "website-url": {
+                    "example": "https://dnadoeproject.org/case/rock-co-john-doe-1981/"
+                  },
+                  "contact-url": {
                     "example": "any"
                   }
                 }
