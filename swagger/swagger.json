@@ -103,6 +103,96 @@
           }
         }
       },
+      "/cases/{case-type}": {
+        "get": {
+          "tags": [
+            "Cold Case"
+          ],
+          "description": "This is going to get a case based on the case type given.",
+          "parameters": [
+            {
+              "name": "case-type",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/cases/{case-date}": {
+        "get": {
+          "tags": [
+            "Cold Case"
+          ],
+          "description": "This is going to get a case based on the date of the given case file.",
+          "parameters": [
+            {
+              "name": "case-date",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/cases/{status}": {
+        "get": {
+          "tags": [
+            "Cold Case"
+          ],
+          "description": "This is going to get a case based on the status of the case file, whether unsolved or solved.",
+          "parameters": [
+            {
+              "name": "case-type",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
       "/cases/{id}": {
         "get": {
           "tags": [
