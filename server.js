@@ -22,6 +22,10 @@ app.get("/", (req, res) => {
   res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
 });
 
+app.get("/user", requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user));
+});
+
 mongodb.initDb((err) => {
   if (err) {
     console.log(err);
