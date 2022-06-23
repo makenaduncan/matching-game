@@ -28,7 +28,7 @@
       "http"
     ],
     "paths": {
-      "/case": {
+      "/cases": {
         "get": {
           "tags": [
             "Cold Case"
@@ -103,12 +103,12 @@
           }
         }
       },
-      "/products/{id}": {
+      "/cases/{id}": {
         "get": {
           "tags": [
-            "Products"
+            "Cold Case"
           ],
-          "description": "Get one product in collection using an ID.",
+          "description": "Retrieve one Cold Case object in collection using an ID.",
           "parameters": [
             {
               "name": "id",
