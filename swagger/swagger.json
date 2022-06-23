@@ -6,7 +6,7 @@
       "version": "1.0.0"
     },
     "host": [
-      "duncan-moses-final-project.herokuapp.com"
+      "fp-matching-game.herokuapp.com"
     ],
     "basePath": "/",
     "tags": [
