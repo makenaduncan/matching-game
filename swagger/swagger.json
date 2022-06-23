@@ -134,9 +134,9 @@
         },
         "delete": {
           "tags": [
-            "Products"
+            "Cold Case"
           ],
-          "description": "Delete one product in the collection using an ID.",
+          "description": "Delete one case file object in the collection using an ID.",
           "parameters": [
             {
               "name": "id",
@@ -159,9 +159,9 @@
         },
         "put": {
           "tags": [
-            "Products"
+            "Cold Case"
           ],
-          "description": "Update exisiting Product in the database using ID to locate that Product",
+          "description": "Update an existing case file object in the collection using the ID. Example is updating status of the cold case file from unsolved to solved.",
           "parameters": [
             {
               "name": "id",
@@ -175,25 +175,37 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
+                  "case-name": {
+                    "example": "Baker Co John Doe 1995"
+                  },
+                  "summarized-case-description": {
                     "example": "any"
                   },
-                  "description": {
+                  "case-type": {
+                    "example": "homicide; missing persons, etc."
+                  },
+                  "victim-picture": {
                     "example": "any"
                   },
-                  "category": {
+                  "victim-name": {
                     "example": "any"
                   },
-                  "type": {
+                  "victim-age": {
                     "example": "any"
                   },
-                  "size": {
+                  "date-body-found": {
                     "example": "any"
                   },
-                  "color": {
+                  "location": {
                     "example": "any"
                   },
-                  "price": {
+                  "status": {
+                    "example": "unsolved"
+                  },
+                  "website-url": {
+                    "example": "https://dnadoeproject.org/case/rock-co-john-doe-1981/"
+                  },
+                  "contact-url": {
                     "example": "any"
                   }
                 }
