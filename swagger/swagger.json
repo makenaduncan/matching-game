@@ -15,7 +15,7 @@
         "description": "All API endpoints related to the game collection."
       },
       {
-        "name": "Cold Case",
+        "name": "Cold Case File",
         "description": "API endpoints for retrieving data on cold cases"
       },
       {
@@ -31,7 +31,7 @@
       "/cases": {
         "get": {
           "tags": [
-            "Cold Case"
+            "Cold Case File"
           ],
           "description": "Get all cold cases in the collection",
           "parameters": [],
@@ -46,7 +46,7 @@
         },
         "post": {
           "tags": [
-            "Cold Case"
+            "Cold Case File"
           ],
           "description": "Create a new cold case. (used for people authorized to create case files.)",
           "parameters": [
@@ -106,7 +106,7 @@
       "/cases/{case-type}": {
         "get": {
           "tags": [
-            "Cold Case"
+            "Cold Case File"
           ],
           "description": "This is going to get a case based on the case type given.",
           "parameters": [
@@ -136,7 +136,7 @@
       "/cases/{case-date}": {
         "get": {
           "tags": [
-            "Cold Case"
+            "Cold Case File"
           ],
           "description": "This is going to get a case based on the date of the given case file.",
           "parameters": [
@@ -166,7 +166,7 @@
       "/cases/{status}": {
         "get": {
           "tags": [
-            "Cold Case"
+            "Cold Case File"
           ],
           "description": "This is going to get a case based on the status of the case file, whether unsolved or solved.",
           "parameters": [
@@ -196,7 +196,7 @@
       "/cases/{id}": {
         "get": {
           "tags": [
-            "Cold Case"
+            "Cold Case File"
           ],
           "description": "Retrieve one Cold Case object in collection using an ID.",
           "parameters": [
@@ -224,7 +224,7 @@
         },
         "delete": {
           "tags": [
-            "Cold Case"
+            "Cold Case File"
           ],
           "description": "Delete one case file object in the collection using an ID.",
           "parameters": [
@@ -249,7 +249,7 @@
         },
         "put": {
           "tags": [
-            "Cold Case"
+            "Cold Case File"
           ],
           "description": "Update an existing case file object in the collection using the ID. Example is updating status of the cold case file from unsolved to solved.",
           "parameters": [
@@ -537,166 +537,13 @@
                 "type": "object",
                 "properties": {
                   "ranking": {
-                    "example": "GhostRider123"
+                    "example": "5"
                   },
                   "username": {
                     "example": "GhostRider123"
                   },
                   "score": {
                     "example": "138123"
-                  }
-                }
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        }
-      },
-      
-      "/designs": {
-        "get": {
-          "tags": [
-            "Designs"
-          ],
-          "description": "Get all designs in collection",
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "post": {
-          "tags": [
-            "Designs"
-          ],
-          "description": "Create design item and save in design collection",
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "example": "any"
-                  },
-                  "material": {
-                    "example": "any"
-                  },
-                  "price": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          ],
-          "responses": {
-            "201": {
-              "description": "Created"
-            },
-            "400": {
-              "description": "Bad Request"
-            }
-          }
-        }
-      },
-      "/designs/{id}": {
-        "get": {
-          "tags": [
-            "Designs"
-          ],
-          "description": "Get one design in collection using an ID.",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "delete": {
-          "tags": [
-            "Designs"
-          ],
-          "description": "Delete one design in the collection using an ID.",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "put": {
-          "tags": [
-            "Designs"
-          ],
-          "description": "Update exisiting contact in the database using ID to locate that contact.",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "body",
-              "in": "body",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "example": "any"
-                  },
-                  "material": {
-                    "example": "any"
-                  },
-                  "price": {
-                    "example": "any"
                   }
                 }
               }
