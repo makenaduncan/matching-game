@@ -19,7 +19,7 @@
         "description": "API endpoints for retrieving data on cold cases"
       },
       {
-        "name": "Score / Leaderboard",
+        "name": "Score",
         "description": "API endpoints for adding, removing, updating and getting scores."
       }
     ],
@@ -318,12 +318,12 @@
           }
         }
       },
-      "/inventory": {
+      "/scores": {
         "get": {
           "tags": [
-            "Inventory"
+            "Score"
           ],
-          "description": "Get all inventory items in collection",
+          "description": "Retrieve all scores from the collection.",
           "parameters": [],
           "responses": {
             "200": {
@@ -336,9 +336,9 @@
         },
         "post": {
           "tags": [
-            "Inventory"
+            "Score"
           ],
-          "description": "Create an inventory item in collection",
+          "description": "Adds score to the database from the complewted game",
           "parameters": [
             {
               "name": "body",
@@ -346,20 +346,14 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "category": {
-                    "example": "any"
+                  "ranking": {
+                    "example": "GhostRider123"
                   },
-                  "type": {
-                    "example": "any"
+                  "username": {
+                    "example": "GhostRider123"
                   },
-                  "size": {
-                    "example": "any"
-                  },
-                  "color": {
-                    "example": "any"
-                  },
-                  "quantity": {
-                    "example": "any"
+                  "score": {
+                    "example": "138123"
                   }
                 }
               }
@@ -375,12 +369,12 @@
           }
         }
       },
-      "/inventory/{id}": {
+      "/scores/{id}": {
         "get": {
           "tags": [
-            "Inventory"
+            "Score"
           ],
-          "description": "Get inventory item in collection",
+          "description": "Get score by user ID (This may not work unless we have a user collection containing a score property)",
           "parameters": [
             {
               "name": "id",
@@ -403,9 +397,9 @@
         },
         "delete": {
           "tags": [
-            "Inventory"
+            "Score"
           ],
-          "description": "Delete an inventory item in collection",
+          "description": "Removes a score from the database. If wanting to display the top 10 or 20 scores, as scores are added, lower scores can be removed using this API, giving the API the ID of the score.",
           "parameters": [
             {
               "name": "id",
@@ -428,9 +422,9 @@
         },
         "put": {
           "tags": [
-            "Inventory"
+            "Score"
           ],
-          "description": "Update a single inventory item using an ID",
+          "description": "Update a specific score found by giving the API an ID. As scores are added, other scores may need to move up or down. This API does that.",
           "parameters": [
             {
               "name": "id",
@@ -444,20 +438,14 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "category": {
-                    "example": "any"
+                  "ranking": {
+                    "example": "12"
                   },
-                  "type": {
-                    "example": "any"
+                  "username": {
+                    "example": "GhostRider123"
                   },
-                  "size": {
-                    "example": "any"
-                  },
-                  "color": {
-                    "example": "any"
-                  },
-                  "quantity": {
-                    "example": "any"
+                  "score": {
+                    "example": "138123"
                   }
                 }
               }
@@ -479,6 +467,105 @@
           }
         }
       },
+      "/scores/{ranking}": {
+        "get": {
+          "tags": [
+            "Score"
+          ],
+          "description": "Retrieve score from database when API receives a ranking number. Ranking 1 will return the highest score, 2 the next highest, so on.",
+          "parameters": [
+            {
+              "name": "ranking",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Score"
+          ],
+          "description": "Similar to the delete for score, this one allows you to use a score rank number instead of the ID.",
+          "parameters": [
+            {
+              "name": "ranking",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Score"
+          ],
+          "description": "Similar to the score update endpoint, except this endpoint uses a rank number instead of ID number.",
+          "parameters": [
+            {
+              "name": "ranking",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ranking": {
+                    "example": "GhostRider123"
+                  },
+                  "username": {
+                    "example": "GhostRider123"
+                  },
+                  "score": {
+                    "example": "138123"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      
       "/designs": {
         "get": {
           "tags": [
