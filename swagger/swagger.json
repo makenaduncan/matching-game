@@ -12,7 +12,7 @@
     "tags": [
       {
         "name": "Game",
-        "description": "All API endpoints related to the game collection."
+        "description": "API endpoints to retrieve, create, update and delete game objects. Each game object will have a case-size property and an array of cases proportional to the size."
       },
       {
         "name": "Cold Case File",
@@ -20,7 +20,7 @@
       },
       {
         "name": "Score",
-        "description": "API endpoints for adding, removing, updating and getting scores."
+        "description": "API endpoints for adding, removing, updating and getting scores objects"
       }
     ],
     "schemes": [
@@ -544,6 +544,286 @@
                   },
                   "score": {
                     "example": "138123"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/game": {
+        "get": {
+          "tags": [
+            "Game"
+          ],
+          "description": "Retreives all game objects from collection. The game object will have a card-size property and an array of case file objects proportional to the card-size. ",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Game"
+          ],
+          "description": "Create a game object to be stored in the database. Exploring an option to randomize case files instead of making someone create the game case files array.",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "case-files": {
+                    "example": [
+                      {
+                        "Case File 1": "ObjectId('0000000000000')"
+                      },
+                      {
+                        "Case File 2": "ObjectId('0000000000000')"
+                      },
+                      {
+                        "Case File 3": "ObjectId('0000000000000')"
+                      },
+                      {
+                        "Case File 4": "ObjectId('0000000000000')"
+                      }
+
+                    ]
+                  },
+                  "case-size": {
+                    "example": "15"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": "Bad Request"
+            }
+          }
+        }
+      },
+      "/game/{id}": {
+        "get": {
+          "tags": [
+            "Game"
+          ],
+          "description": "Pass an ID to this endpoint to retrieve a specific game object.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Game"
+          ],
+          "description": "Pass an ID to this endpoint to delete a specific game object.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Game"
+          ],
+          "description": "Give this endpoint an ID number to update a specific game object.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "case-files": {
+                    "example": [
+                      {
+                        "Case File 1": "ObjectId('0000000000000')"
+                      },
+                      {
+                        "Case File 2": "ObjectId('0000000000000')"
+                      },
+                      {
+                        "Case File 3": "ObjectId('0000000000000')"
+                      },
+                      {
+                        "Case File 4": "ObjectId('0000000000000')"
+                      }
+
+                    ]
+                  },
+                  "case-size": {
+                    "example": "15"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/game/{card-size}": {
+        "get": {
+          "tags": [
+            "Game"
+          ],
+          "description": "Pass a card-size to this endpoint to retrieve a specific game object based on card-size",
+          "parameters": [
+            {
+              "name": "card-size",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Game"
+          ],
+          "description": "Pass a card-size to this endpoint to delete a specific game object.",
+          "parameters": [
+            {
+              "name": "card-size",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Game"
+          ],
+          "description": "Give this endpoint a card-size to update a specific game object. Won't work if you have several game objects with the same card-size.",
+          "parameters": [
+            {
+              "name": "card-size",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "case-files": {
+                    "example": [
+                      {
+                        "Case File 1": "ObjectId('0000000000000')"
+                      },
+                      {
+                        "Case File 2": "ObjectId('0000000000000')"
+                      },
+                      {
+                        "Case File 3": "ObjectId('0000000000000')"
+                      },
+                      {
+                        "Case File 4": "ObjectId('0000000000000')"
+                      }
+
+                    ]
+                  },
+                  "case-size": {
+                    "example": "15"
                   }
                 }
               }
