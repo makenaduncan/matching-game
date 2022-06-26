@@ -11,16 +11,24 @@
     "basePath": "/",
     "tags": [
       {
-        "name": "Game",
-        "description": "API endpoints to retrieve, create, update and delete game objects. Each game object will have a case-size property and an array of cases proportional to the size."
+        "name": "Agency Information",
+        "description": "Endpoints to create, update, delete agency information. This agency information will be tied to each case file in a one to many relationship."
       },
       {
         "name": "Cold Case File",
         "description": "API endpoints for retrieving data on cold cases"
       },
       {
+        "name": "Game",
+        "description": "API endpoints to retrieve, create, update and delete game objects. Each game object will have a case-size property and an array of cases proportional to the size."
+      },
+      {
         "name": "Score",
         "description": "API endpoints for adding, removing, updating and getting scores objects"
+      },
+      {
+        "name": "User",
+        "description": "API endpoints for retrieving an authenticated user's information."
       }
     ],
     "schemes": [
@@ -855,6 +863,363 @@
           "responses": {
             "200": {
               "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/agency": {
+        "get": {
+          "tags": [
+            "Agency Information"
+          ],
+          "description": "Get a list of all agencies and their information.",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "Agency Information"
+          ],
+          "description": "Adds a new agency to the list of agencies in the database.",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "agency-name": {
+                    "example": "Baker Co Sheriff's Office, Detective Division"
+                  },
+                  "supervisor-name": {
+                    "example": "David Mancini, Lieutenant"
+                  },
+                  "phone-number": {
+                    "example": "904-259-9218"
+                  },
+                  "email": {
+                    "example": "david.mancini@bakerso.com"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            },
+            "400": {
+              "description": "Bad Request"
+            }
+          }
+        }
+      },
+      "/agency/{id}": {
+        "get": {
+          "tags": [
+            "Agency Information"
+          ],
+          "description": "Pass an ID to this endpoint to retrieve a specific agency.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Agency Information"
+          ],
+          "description": "Pass an ID to this endpoint to delete a specific agency from the list of agencies.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Agency Information"
+          ],
+          "description": "Give this endpoint an ID number to update a specific agency from the list of agencies.",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "agency-name": {
+                    "example": "Baker Co Sheriff's Office, Detective Division"
+                  },
+                  "supervisor-name": {
+                    "example": "David Mancini, Lieutenant"
+                  },
+                  "phone-number": {
+                    "example": "904-259-9218"
+                  },
+                  "email": {
+                    "example": "david.mancini@bakerso.com"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/agency/{agency-name}": {
+        "get": {
+          "tags": [
+            "Agency Information"
+          ],
+          "description": "Give this endpoint an agency name to retrieve that agency's information.",
+          "parameters": [
+            {
+              "name": "agency-name",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Agency Information"
+          ],
+          "description": "Give the agency name to this endpoint to delete that agency's information from the database.",
+          "parameters": [
+            {
+              "name": "agency-name",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Agency Information"
+          ],
+          "description": "Give this endpoint an agency name to update a specific agency from the list of agencies.",
+          "parameters": [
+            {
+              "name": "agency-name",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "agency-name": {
+                    "example": "Baker Co Sheriff's Office, Detective Division"
+                  },
+                  "supervisor-name": {
+                    "example": "David Mancini, Lieutenant"
+                  },
+                  "phone-number": {
+                    "example": "904-259-9218"
+                  },
+                  "email": {
+                    "example": "david.mancini@bakerso.com"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/agency/{phone-number}": {
+        "get": {
+          "tags": [
+            "Agency Information"
+          ],
+          "description": "Give this endpoint an agency phone number to retrieve that agency's information.",
+          "parameters": [
+            {
+              "name": "phone-number",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Agency Information"
+          ],
+          "description": "Give the agency phone number to this endpoint to delete that agency's information from the database.",
+          "parameters": [
+            {
+              "name": "phone-number",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "404": {
+              "description": "Not Found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "Agency Information"
+          ],
+          "description": "Give this endpoint an agency phone number to update a specific agency from the list of agencies.",
+          "parameters": [
+            {
+              "name": "agency-name",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "agency-name": {
+                    "example": "Baker Co Sheriff's Office, Detective Division"
+                  },
+                  "supervisor-name": {
+                    "example": "David Mancini, Lieutenant"
+                  },
+                  "phone-number": {
+                    "example": "904-259-9218"
+                  },
+                  "email": {
+                    "example": "david.mancini@bakerso.com"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "400": {
+              "description": "Bad Request"
+            },
+            "404": {
+              "description": "Not Found"
             },
             "500": {
               "description": "Internal Server Error"
