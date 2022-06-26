@@ -844,6 +844,23 @@
             }
           }
         }
+      },
+      "/user": {
+        "get": {
+          "tags": [
+            "User"
+          ],
+          "description": "Retrieves currently logged in user details such as given name, nickname, name, email, picture and whether email has been verified.",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
       }
     }
   }
