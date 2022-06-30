@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const agency = require('./agencyModel')
+const agencySchema = require('./agencyModel')
 
 const caseSchema = new mongoose.Schema({
 
@@ -17,7 +17,7 @@ const caseSchema = new mongoose.Schema({
     location: String,
     caseStatus: String,
     websiteUrl: String,
-    agencyInformation: Schema.ObjectId
+    agencyInformation: [agencySchema]
 });
 
 const cases = mongoose.model('Case', caseSchema, "cases");
