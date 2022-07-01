@@ -3,6 +3,7 @@ const app = express();
 const mongodb = require("./db/connect");
 const { requiresAuth } = require("express-openid-connect");
 const port = process.env.PORT || 3000;
+const cors = require("cors");
 
 const { auth } = require("express-openid-connect");
 
@@ -29,6 +30,8 @@ app.get("/user", requiresAuth(), (req, res) => {
 
 // Use json and also require index file that will reference all other route files.
 app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
+app.use(cors);
 
 app.use('/', require('./routes/index'));
 
