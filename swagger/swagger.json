@@ -355,7 +355,7 @@
                 "type": "object",
                 "properties": {
                   "ranking": {
-                    "example": "GhostRider123"
+                    "example": "1"
                   },
                   "username": {
                     "example": "GhostRider123"
