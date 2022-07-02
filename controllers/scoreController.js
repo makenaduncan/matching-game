@@ -1,8 +1,11 @@
-const Score = require('../models/scoreModel');
+const Score = require('../models/score');
 
 // /scores endpoints
 
 const getScores = async (req, res) => {
+
+    // #swagger.tags = ['Score']
+    // #swagger.description = 'Get all score items in collection'
 
     try {
         const scores = await Score.find();
@@ -14,6 +17,9 @@ const getScores = async (req, res) => {
 }
 
 const createScores = async (req, res) => {
+
+    // #swagger.tags = ['Score']
+    // #swagger.description = 'Create score item and add to collection'
 
     const score = new Score ({
 
@@ -34,6 +40,9 @@ const createScores = async (req, res) => {
 // /scores/{id} ENDPOINTS
 const getScoreWithID = async (req, res) => {
 
+    // #swagger.tags = ['Score']
+    // #swagger.description = 'Get score item in collection based on ID'
+
     try {
         res.status(200).json(res.score);
     } catch(err) {
@@ -44,9 +53,12 @@ const getScoreWithID = async (req, res) => {
 
 const deleteScoreWithID = async (req, res) => {
 
+    // #swagger.tags = ['Score']
+    // #swagger.description = 'Get score item in collection based on ID'
+
     try {
         await res.score.deleteOne();
-        res.status(204);
+        res.status(200).json({message: "Delete Successful."});
     } catch(err) {
         res.status(400).json({message:err.message});
     }
@@ -54,6 +66,9 @@ const deleteScoreWithID = async (req, res) => {
 }
 
 const updateScoreWithID = async (req, res) => {
+
+    // #swagger.tags = ['Score']
+    // #swagger.description = 'Update score item in collection based on ID'
 
     if(req.body.ranking != null)
     {
@@ -76,6 +91,9 @@ const updateScoreWithID = async (req, res) => {
 // /scores/{id} ENDPOINTS
 const getScoreWithRanking = async (req, res) => {
 
+    // #swagger.tags = ['Score']
+    // #swagger.description = 'Get score item in collection based on ranking'
+
     try {
         res.status(200).json(res.score);
     } catch(err) {
@@ -85,6 +103,9 @@ const getScoreWithRanking = async (req, res) => {
 }
 
 const deleteScoreWithRanking = async (req, res) => {
+
+    // #swagger.tags = ['Score']
+    // #swagger.description = 'Delete score item in collection based on ranking'
 
     try {
         await res.score.deleteOne();
@@ -96,6 +117,9 @@ const deleteScoreWithRanking = async (req, res) => {
 }
 
 const updateScoreWithRanking = async (req, res) => {
+
+    // #swagger.tags = ['Score']
+    // #swagger.description = 'Update score item in collection based on ranking'
 
     if(req.body.ranking != null)
     {

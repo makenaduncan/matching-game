@@ -6,7 +6,7 @@
       "version": "1.0.0"
     },
     "host": [
-      "fp-matching-game.herokuapp.com"
+      "localhost:3000"
     ],
     "basePath": "/",
     "tags": [
@@ -32,8 +32,8 @@
       }
     ],
     "schemes": [
-      "https",
-      "http"
+      "http",
+      "https"
     ],
     "paths": {
       "/cases": {
