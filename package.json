@@ -2,11 +2,12 @@
   
   "name": "matching-game",
   "version": "1.0.0",
-  "description": "An API project to obtain information regarding cold cases for a matching game from a database.",
+  "description": "This is an api that pulls cold case information and displays it in the form of a matching game. Its purpose is the bring awareness to the cases.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "devStart": "node swagger/swagger.js"
+    "devStart": "node swagger/swagger.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -28,7 +29,9 @@
     "swagger-ui-express": "^4.4.0"
   },
   "devDependencies": {
-    "swagger-autogen": "^2.21.4"
+    "swagger-autogen": "^2.21.4",
+    "@shelf/jest-mongodb": "^3.0.2",
+    "jest": "^28.1.2"
   }
  
 }
