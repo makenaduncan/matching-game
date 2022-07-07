@@ -41,6 +41,7 @@ app.use((req, res, next) => {
   next();
 })
 
+// Pulls user information from Auth0 and creates a profile
 app.get("/user", requiresAuth(), (req, res) => {
 
   try {
