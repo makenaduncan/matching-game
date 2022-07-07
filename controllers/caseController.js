@@ -4,9 +4,6 @@ const Agency = require('../models/agency');
 
 const getCases = async (req, res) => {
     try {
-
-        res.status(200).json(JSON.stringify(req.user));
-        return
         // Save queries made by front end
         const queryObject = req.query;
         

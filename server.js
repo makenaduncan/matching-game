@@ -4,9 +4,10 @@ const mongodb = require("./db/mongoConnect");
 const { requiresAuth } = require("express-openid-connect");
 const port = process.env.PORT || 3000;
 const cors = require("cors");
-const Score = require('./models/score');
+const User = require('./models/user');
 
 const { auth } = require("express-openid-connect");
+const { get } = require("mongoose");
 
 const config = {
   authRequired: false,
@@ -14,7 +15,7 @@ const config = {
   secret: process.env.SECRET,
   baseURL: process.env.BASE_URL,
   clientID: process.env.CLIENT_ID,
-  issuerBaseURL: process.env.ISSUER_BASE_URL,
+  issuerBaseURL: process.env.ISSUER_BASE_URL
 };
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
@@ -32,11 +33,10 @@ app.get("/", (req, res) => {
 app.use((req, res, next) => {
 
   // Find out if user is in the collection already.
-  req.user = "test";
   // If not, Create new user object based on OIDC and add to collection.
-
   // If they are in collection, update last login time and increment number of calls.
   // Set req.user equal to the whole user object of the colletion for the user.
+  
   res.setHeader('Access-Control-Allow-Origin', '*');
   next();
 })
