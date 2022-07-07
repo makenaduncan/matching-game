@@ -1,35 +1,55 @@
 const Case = require('../models/case');
+const Agency = require('../models/agency');
 
-// /scores endpoints
 
-const getScores = async (req, res) => {
-    // #swagger.tags = ['Score']
-    // #swagger.description = 'Get all score items in collection'
-
+const getCases = async (req, res) => {
     try {
-        const scores = await Score.find();
-        res.status(200).json(scores);
 
+        res.status(200).json(JSON.stringify(req.user));
+        return
+        // Save queries made by front end
+        const queryObject = req.query;
+        
+        cases = await getAllCases();
+
+        var result = cases;
+
+        // Query
+        // if(queryObject.name != null)
+        // {
+        //    result = scores.filter(item => item.name == queryObject.name);
+        // }
+
+        res.status(200).json(result);
     } catch(err) {
         res.status(500).json({message: err.message});
     }
 }
 
-const createScores = async (req, res) => {
+const createCases = async (req, res) => {
 
-    // #swagger.tags = ['Score']
-    // #swagger.description = 'Create score item and add to collection'
+    const Newcase = new Case ({
 
-    const score = new Score ({
-
-        ranking: req.body.ranking,
-        username: req.body.username,
-        score: req.body.score
+        caseName: req.body.caseName,
+        summarizedCaseDescription: req.body.summarizedCaseDescription,
+        caseType: req.body.caseType,
+        victimPicture: req.body.victimPicture,
+        victimName: req.body.victimName,
+        victimAge: req.body.victimAge,
+        caseDate: req.body.caseDate,
+        location: req.body.location,
+        caseStatus: req.body.caseStatus,
+        websiteUrl: req.body.websiteUrl
     })
     
+    // Load
+    agency = await Agency.findById(req.body.agencyInformation);
+
+    Newcase.agencyInformation = agency._id;
+
     try {
-        const newScoreItem = await score.save();
-        res.status(201).json(newScoreItem);
+        const newCaseItem = await Newcase.save();
+        res.status(201).json(newCaseItem);
 
     } catch(err) {
         res.status(400).json({message: err.message});
@@ -37,150 +57,83 @@ const createScores = async (req, res) => {
 }
 
 // /scores/{id} ENDPOINTS
-const getScoreWithID = async (req, res) => {
-
-    // #swagger.tags = ['Score']
-    // #swagger.description = 'Get score item in collection based on ID'
+const getCase = async (req, res) => {
 
     try {
-        res.status(200).json(res.score);
+        res.status(200).json(res.case);
     } catch(err) {
         res.status(400).json({message:err.message});
     }
 
 }
 
-const deleteScoreWithID = async (req, res) => {
+// const deleteScoreWithID = async (req, res) => {
 
-    // #swagger.tags = ['Score']
-    // #swagger.description = 'Get score item in collection based on ID'
+//     // #swagger.tags = ['Score']
+//     // #swagger.description = 'Get score item in collection based on ID'
 
-    try {
-        await res.score.deleteOne();
-        res.status(200).json({message: "Delete Successful."});
-    } catch(err) {
-        res.status(400).json({message:err.message});
-    }
+//     try {
+//         await res.score.deleteOne();
+//         res.status(200).json({message: "Delete Successful."});
+//     } catch(err) {
+//         res.status(400).json({message:err.message});
+//     }
 
-}
+// }
 
-const updateScoreWithID = async (req, res) => {
+// const updateScoreWithID = async (req, res) => {
 
-    // #swagger.tags = ['Score']
-    // #swagger.description = 'Update score item in collection based on ID'
+//     // #swagger.tags = ['Score']
+//     // #swagger.description = 'Update score item in collection based on ID'
 
-    if(req.body.ranking != null)
-    {
-        res.score.ranking = req.body.ranking;
-    }
+//     if(req.body.ranking != null)
+//     {
+//         res.score.ranking = req.body.ranking;
+//     }
 
-    if(req.body.username != null)
-    {
-        res.score.username = req.body.username;
-    }
+//     if(req.body.username != null)
+//     {
+//         res.score.username = req.body.username;
+//     }
 
-    if(req.body.score != null)
-    {
-        res.score.score = req.body.score;
-    }
+//     if(req.body.score != null)
+//     {
+//         res.score.score = req.body.score;
+//     }
 
-}
+// }
 
-// /scores/{ranking} ENDOINTS
-// /scores/{id} ENDPOINTS
-const getScoreWithRanking = async (req, res) => {
 
-    // #swagger.tags = ['Score']
-    // #swagger.description = 'Get score item in collection based on ranking'
+// // MIDDLEWARE
+async function getCaseById(req, res, next) {
+    let caseItem;
 
     try {
-        res.status(200).json(res.score);
-    } catch(err) {
-        res.status(400).json({message:err.message});
-    }
+        caseItem = await Case.findById(req.params.id)
+        .populate("agencyInformation");
 
-}
-
-const deleteScoreWithRanking = async (req, res) => {
-
-    // #swagger.tags = ['Score']
-    // #swagger.description = 'Delete score item in collection based on ranking'
-
-    try {
-        await res.score.deleteOne();
-        res.status(204);
-    } catch(err) {
-        res.status(400).json({message:err.message});
-    }
-
-}
-
-const updateScoreWithRanking = async (req, res) => {
-
-    // #swagger.tags = ['Score']
-    // #swagger.description = 'Update score item in collection based on ranking'
-
-    if(req.body.ranking != null)
-    {
-        res.score.ranking = req.body.ranking;
-    }
-
-    if(req.body.username != null)
-    {
-        res.score.username = req.body.username;
-    }
-
-    if(req.body.score != null)
-    {
-        res.score.score = req.body.score;
-    }
-
-}
-
-// MIDDLEWARE
-async function getScoreById(req, res, next) {
-    let score;
-
-    try {
-        score = await Score.findById(req.params.id);
-
-        if(score == null)
+        if(caseItem == null)
         {
             return res.status(404).json({message: "Could not find specified score by ID. Check ID and try again."});
         }
     } catch(err) {
         return res.status(500).json({message: err.message});
     }
-    res.score = score;
+    res.case = caseItem;
     next();
 }
 
-async function getScoreByRanking(req, res, next) {
-    let score;
+async function getAllCases()
+{
+    cases = await Case.find()
+    .populate("agencyInformation");
 
-    try {
-        score = await Score.findById(req.params.ranking);
-
-        if(score == null)
-        {
-            return res.status(404).json({message: "Could not find specified score by ranking number. Check rank number and try again."});
-        }
-    } catch(err) {
-        return res.status(500).json({message: err.message});
-    }
-    res.score = score;
-    next();
+    return cases;
 }
 
 module.exports = {
-    getScores,
-    createScores,
-    getScoreWithID,
-    deleteScoreWithID,
-    updateScoreWithID,
-    getScoreWithRanking,
-    deleteScoreWithRanking,
-    updateScoreWithRanking,
-    getScoreById,
-    getScoreByRanking
+    getCases,
+    createCases,
+    getCase,
+    getCaseById
 }

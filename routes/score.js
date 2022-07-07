@@ -21,15 +21,4 @@ router.delete('/scores/:id', requiresAuth(), scores.getScoreById, scores.deleteS
 router.put('/scores/:id', requiresAuth(), scores.getScoreById, scores.updateScoreWithID);
 
 
-
-// /scores/{ranking} GET
-router.get('/scores/:ranking', scores.getScoreByRanking, scores.getScoreWithRanking);
-
-// /scores/{ranking} DELETE
-router.delete('/scores/:ranking', requiresAuth(), scores.getScoreByRanking, scores.deleteScoreWithRanking);
-
-// /scores/{ranking} UPDATE
-router.put('/scores/:ranking', requiresAuth(), scores.getScoreByRanking, scores.updateScoreWithRanking);
-
-
 module.exports = router;

@@ -4,6 +4,7 @@ const mongodb = require("./db/mongoConnect");
 const { requiresAuth } = require("express-openid-connect");
 const port = process.env.PORT || 3000;
 const cors = require("cors");
+const Score = require('./models/score');
 
 const { auth } = require("express-openid-connect");
 
@@ -29,6 +30,13 @@ app.get("/", (req, res) => {
 });
 
 app.use((req, res, next) => {
+
+  // Find out if user is in the collection already.
+  req.user = "test";
+  // If not, Create new user object based on OIDC and add to collection.
+
+  // If they are in collection, update last login time and increment number of calls.
+  // Set req.user equal to the whole user object of the colletion for the user.
   res.setHeader('Access-Control-Allow-Origin', '*');
   next();
 })
@@ -43,6 +51,7 @@ app.get("/user", requiresAuth(), (req, res) => {
   }
   
 });
+
 
 // Use json and also require index file that will reference all other route files.
 app.use(express.json());

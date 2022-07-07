@@ -5,20 +5,15 @@ const { auth } = require("express-openid-connect")
 // /scores endpoints
 
 const getScores = async (req, res) => {
+
     // #swagger.tags = ['Score']
     // #swagger.description = 'Get all score items in collection'
 
     try {
+        // Save queries made by front end
         const queryObject = req.query;
-        // {name:"dad", fine:10, id:"23423098472398742342"}
-        
-        // rasdfasdfasdfasdf/scores?name=dad&fine=10&id=234234234
 
-        // query.Where(x => x.name is bill && false)
-        // query.Where(x => (queryObject.Id == null || x.Id == queryObject.Id) &&
-        // (queryObject.Name == null || x.Name == queryObject.Name) &&)
-
-
+        // Pass in email as username to get
         scores = await getAllScores(req.oidc.user.email);
 
 
@@ -29,10 +24,6 @@ const getScores = async (req, res) => {
         if(queryObject.ranking != null)
         {
            result = scores.filter(item => item.ranking == queryObject.ranking);
-        }
-        if(queryObject.username != null)
-        {
-           result = scores.filter(item => item.username == queryObject.username);
         }
 
         res.status(200).json(result);

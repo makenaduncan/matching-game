@@ -8,6 +8,7 @@ router.get('/api-docs', swaggerUi.setup(swaggerDocument));
 router.use('/', require('./cases'));
 router.use('/', require('./game'));
 router.use('/', require('./score'));
+router.use('/', require('./agency'));
 
 
 module.exports = router;

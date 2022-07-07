@@ -14,10 +14,10 @@ const getAgencies = async (req, res) => {
         var result = agencies;
 
         // Query
-        // if(queryObject.ranking != null)
-        // {
-        //    result = scores.filter(item => item.ranking == queryObject.ranking);
-        // }
+        if(queryObject.name != null)
+        {
+           result = scores.filter(item => item.name == queryObject.name);
+        }
 
         res.status(200).json(result);
     } catch(err) {
@@ -94,9 +94,9 @@ async function getAgencyById(req, res, next) {
     let agency;
 
     try {
-        score = await Agency.findById(req.params.id);
+        agency = await Agency.findById(req.params.id);
 
-        if(score == null)
+        if(agency == null)
         {
             return res.status(404).json({message: "Could not find specified score by ID. Check ID and try again."});
         }
