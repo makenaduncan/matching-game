@@ -6,7 +6,7 @@
       "version": "1.0.0"
     },
     "host": [
-      "fp-matching-game.herokuapp.com"
+      "localhost:3000"
     ],
     "basePath": "/",
     "tags": [
@@ -94,8 +94,12 @@
                   "website-url": {
                     "example": "https://dnadoeproject.org/case/rock-co-john-doe-1981/"
                   },
-                  "contact-url": {
-                    "example": "any"
+                  "agency-information": {
+                    "agency": {
+                      "object-id": {
+                        "example":"123456432"
+                      }
+                    }
                   }
                 }
               }
@@ -354,12 +358,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "ranking": {
-                    "example": "1"
-                  },
-                  "username": {
-                    "example": "GhostRider123"
-                  },
                   "score": {
                     "example": "138123"
                   }
@@ -448,104 +446,6 @@
                 "properties": {
                   "ranking": {
                     "example": "12"
-                  },
-                  "username": {
-                    "example": "GhostRider123"
-                  },
-                  "score": {
-                    "example": "138123"
-                  }
-                }
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        }
-      },
-      "/scores/{ranking}": {
-        "get": {
-          "tags": [
-            "Score"
-          ],
-          "description": "Retrieve score from database when API receives a ranking number. Ranking 1 will return the highest score, 2 the next highest, so on.",
-          "parameters": [
-            {
-              "name": "ranking",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "delete": {
-          "tags": [
-            "Score"
-          ],
-          "description": "Similar to the delete for score, this one allows you to use a score rank number instead of the ID.",
-          "parameters": [
-            {
-              "name": "ranking",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "put": {
-          "tags": [
-            "Score"
-          ],
-          "description": "Similar to the score update endpoint, except this endpoint uses a rank number instead of ID number.",
-          "parameters": [
-            {
-              "name": "ranking",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "body",
-              "in": "body",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "ranking": {
-                    "example": "5"
                   },
                   "username": {
                     "example": "GhostRider123"
@@ -993,13 +893,13 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "agency-name": {
+                  "name": {
                     "example": "Baker Co Sheriff's Office, Detective Division"
                   },
-                  "supervisor-name": {
+                  "supervisor": {
                     "example": "David Mancini, Lieutenant"
                   },
-                  "phone-number": {
+                  "phone": {
                     "example": "904-259-9218"
                   },
                   "email": {
