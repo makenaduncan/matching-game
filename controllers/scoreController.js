@@ -1,6 +1,5 @@
 const url = require('url');
 const Score = require('../models/score');
-const { auth } = require("express-openid-connect")
 
 // /scores endpoints
 
@@ -101,57 +100,6 @@ const updateScoreWithID = async (req, res) => {
 
 }
 
-// /scores/{ranking} ENDOINTS
-// /scores/{id} ENDPOINTS
-const getScoreWithRanking = async (req, res) => {
-
-    // #swagger.tags = ['Score']
-    // #swagger.description = 'Get score item in collection based on ranking'
-
-    try {
-        res.status(200).json(res.score);
-    } catch(err) {
-        res.status(400).json({message:err.message});
-    }
-
-}
-
-const deleteScoreWithRanking = async (req, res) => {
-
-    // #swagger.tags = ['Score']
-    // #swagger.description = 'Delete score item in collection based on ranking'
-
-    try {
-        await res.score.deleteOne();
-        res.status(204);
-    } catch(err) {
-        res.status(400).json({message:err.message});
-    }
-
-}
-
-const updateScoreWithRanking = async (req, res) => {
-
-    // #swagger.tags = ['Score']
-    // #swagger.description = 'Update score item in collection based on ranking'
-
-    if(req.body.ranking != null)
-    {
-        res.score.ranking = req.body.ranking;
-    }
-
-    if(req.body.username != null)
-    {
-        res.score.username = req.body.username;
-    }
-
-    if(req.body.score != null)
-    {
-        res.score.score = req.body.score;
-    }
-
-}
-
 // MIDDLEWARE
 async function getScoreById(req, res, next) {
     let score;
@@ -162,23 +110,6 @@ async function getScoreById(req, res, next) {
         if(score == null)
         {
             return res.status(404).json({message: "Could not find specified score by ID. Check ID and try again."});
-        }
-    } catch(err) {
-        return res.status(500).json({message: err.message});
-    }
-    res.score = score;
-    next();
-}
-
-async function getScoreByRanking(req, res, next) {
-    let score;
-
-    try {
-        score = await Score.findById(req.params.ranking);
-
-        if(score == null)
-        {
-            return res.status(404).json({message: "Could not find specified score by ranking number. Check rank number and try again."});
         }
     } catch(err) {
         return res.status(500).json({message: err.message});
