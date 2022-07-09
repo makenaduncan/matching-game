@@ -5,7 +5,7 @@
     "description": "API endpoints to retrieve information such as cold case data, matching game score list, and game information.",
     "version": "1.0.0"
   },
-  "host": ["https://fp-matching-game.herokuapp.com/"],
+  "host": ["https://fp-matching-game.herokuapp.com"],
   "basePath": "/",
   "tags": [
     {
