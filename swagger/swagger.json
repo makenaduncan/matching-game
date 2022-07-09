@@ -1,1127 +1,1053 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "title": "Cold Case Matching Game API",
-      "description": "API endpoints to retrieve information such as cold case data, matching game score list, and game information.",
-      "version": "1.0.0"
+  "swagger": "2.0",
+  "info": {
+    "title": "Cold Case Matching Game API",
+    "description": "API endpoints to retrieve information such as cold case data, matching game score list, and game information.",
+    "version": "1.0.0"
+  },
+  "host": ["https://fp-matching-game.herokuapp.com/"],
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Agency Information",
+      "description": "Endpoints to create, update, delete agency information. This agency information will be tied to each case file in a one to many relationship."
     },
-    "host": [
-      "localhost:3000"
-    ],
-    "basePath": "/",
-    "tags": [
-      {
-        "name": "Agency Information",
-        "description": "Endpoints to create, update, delete agency information. This agency information will be tied to each case file in a one to many relationship."
+    {
+      "name": "Cold Case File",
+      "description": "API endpoints for retrieving data on cold cases"
+    },
+    {
+      "name": "Game",
+      "description": "API endpoints to retrieve, create, update and delete game objects. Each game object will have a case-size property and an array of cases proportional to the size."
+    },
+    {
+      "name": "Score",
+      "description": "API endpoints for adding, removing, updating and getting scores objects"
+    },
+    {
+      "name": "User",
+      "description": "API endpoints for retrieving an authenticated user's information."
+    }
+  ],
+  "schemes": ["http", "https"],
+  "paths": {
+    "/cases": {
+      "get": {
+        "tags": ["Cold Case File"],
+        "description": "Get all cold cases in the collection",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
       },
-      {
-        "name": "Cold Case File",
-        "description": "API endpoints for retrieving data on cold cases"
-      },
-      {
-        "name": "Game",
-        "description": "API endpoints to retrieve, create, update and delete game objects. Each game object will have a case-size property and an array of cases proportional to the size."
-      },
-      {
-        "name": "Score",
-        "description": "API endpoints for adding, removing, updating and getting scores objects"
-      },
-      {
-        "name": "User",
-        "description": "API endpoints for retrieving an authenticated user's information."
+      "post": {
+        "tags": ["Cold Case File"],
+        "description": "Create a new cold case. (used for people authorized to create case files.)",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "caseName": {
+                  "example": "Baker Co John Doe 1995"
+                },
+                "summarizedCaseDescription": {
+                  "example": "any"
+                },
+                "caseType": {
+                  "example": "homicide; missing persons, etc."
+                },
+                "victimPicture": {
+                  "example": "any"
+                },
+                "victimName": {
+                  "example": "any"
+                },
+                "victimAge": {
+                  "example": "any"
+                },
+                "caseDate": {
+                  "example": "any"
+                },
+                "location": {
+                  "example": "any"
+                },
+                "caseStatus": {
+                  "example": "unsolved"
+                },
+                "websiteUrl": {
+                  "example": "https://dnadoeproject.org/case/rock-co-john-doe-1981/"
+                },
+                "agencyInformation": {
+                  "example": "1230432023948540398234"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
       }
-    ],
-    "schemes": [
-      "http",
-      "https"
-    ],
-    "paths": {
-      "/cases": {
-        "get": {
-          "tags": [
-            "Cold Case File"
-          ],
-          "description": "Get all cold cases in the collection",
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+    },
+    "/cases/{case-type}": {
+      "get": {
+        "tags": ["Cold Case File"],
+        "description": "This is going to get a case based on the case type given.",
+        "parameters": [
+          {
+            "name": "case-type",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
-        },
-        "post": {
-          "tags": [
-            "Cold Case File"
-          ],
-          "description": "Create a new cold case. (used for people authorized to create case files.)",
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "caseName": {
-                    "example": "Baker Co John Doe 1995"
-                  },
-                  "summarizedCaseDescription": {
-                    "example": "any"
-                  },
-                  "caseType": {
-                    "example": "homicide; missing persons, etc."
-                  },
-                  "victimPicture": {
-                    "example": "any"
-                  },
-                  "victimName": {
-                    "example": "any"
-                  },
-                  "victimAge": {
-                    "example": "any"
-                  },
-                  "caseDate": {
-                    "example": "any"
-                  },
-                  "location": {
-                    "example": "any"
-                  },
-                  "caseStatus": {
-                    "example": "unsolved"
-                  },
-                  "websiteUrl": {
-                    "example": "https://dnadoeproject.org/case/rock-co-john-doe-1981/"
-                  },
-                  "agencyInformation": {
-                    "example": "1230432023948540398234"
-                  }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/cases/{case-date}": {
+      "get": {
+        "tags": ["Cold Case File"],
+        "description": "This is going to get a case based on the date of the given case file.",
+        "parameters": [
+          {
+            "name": "case-date",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/cases/{status}": {
+      "get": {
+        "tags": ["Cold Case File"],
+        "description": "This is going to get a case based on the status of the case file, whether unsolved or solved.",
+        "parameters": [
+          {
+            "name": "case-type",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/cases/{id}": {
+      "get": {
+        "tags": ["Cold Case File"],
+        "description": "Retrieve one Cold Case object in collection using an ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Cold Case File"],
+        "description": "Delete one case file object in the collection using an ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Cold Case File"],
+        "description": "Update an existing case file object in the collection using the ID. Example is updating status of the cold case file from unsolved to solved.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "case-name": {
+                  "example": "Baker Co John Doe 1995"
+                },
+                "summarized-case-description": {
+                  "example": "any"
+                },
+                "case-type": {
+                  "example": "homicide; missing persons, etc."
+                },
+                "victim-picture": {
+                  "example": "any"
+                },
+                "victim-name": {
+                  "example": "any"
+                },
+                "victim-age": {
+                  "example": "any"
+                },
+                "date-body-found": {
+                  "example": "any"
+                },
+                "location": {
+                  "example": "any"
+                },
+                "status": {
+                  "example": "unsolved"
+                },
+                "website-url": {
+                  "example": "https://dnadoeproject.org/case/rock-co-john-doe-1981/"
+                },
+                "contact-url": {
+                  "example": "any"
                 }
               }
             }
-          ],
-          "responses": {
-            "201": {
-              "description": "Created"
-            },
-            "400": {
-              "description": "Bad Request"
-            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/scores": {
+      "get": {
+        "tags": ["Score"],
+        "description": "Retrieve all scores from the collection.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "/cases/{case-type}": {
-        "get": {
-          "tags": [
-            "Cold Case File"
-          ],
-          "description": "This is going to get a case based on the case type given.",
-          "parameters": [
-            {
-              "name": "case-type",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        }
-      },
-      "/cases/{case-date}": {
-        "get": {
-          "tags": [
-            "Cold Case File"
-          ],
-          "description": "This is going to get a case based on the date of the given case file.",
-          "parameters": [
-            {
-              "name": "case-date",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        }
-      },
-      "/cases/{status}": {
-        "get": {
-          "tags": [
-            "Cold Case File"
-          ],
-          "description": "This is going to get a case based on the status of the case file, whether unsolved or solved.",
-          "parameters": [
-            {
-              "name": "case-type",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        }
-      },
-      "/cases/{id}": {
-        "get": {
-          "tags": [
-            "Cold Case File"
-          ],
-          "description": "Retrieve one Cold Case object in collection using an ID.",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "delete": {
-          "tags": [
-            "Cold Case File"
-          ],
-          "description": "Delete one case file object in the collection using an ID.",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "put": {
-          "tags": [
-            "Cold Case File"
-          ],
-          "description": "Update an existing case file object in the collection using the ID. Example is updating status of the cold case file from unsolved to solved.",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "body",
-              "in": "body",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "case-name": {
-                    "example": "Baker Co John Doe 1995"
-                  },
-                  "summarized-case-description": {
-                    "example": "any"
-                  },
-                  "case-type": {
-                    "example": "homicide; missing persons, etc."
-                  },
-                  "victim-picture": {
-                    "example": "any"
-                  },
-                  "victim-name": {
-                    "example": "any"
-                  },
-                  "victim-age": {
-                    "example": "any"
-                  },
-                  "date-body-found": {
-                    "example": "any"
-                  },
-                  "location": {
-                    "example": "any"
-                  },
-                  "status": {
-                    "example": "unsolved"
-                  },
-                  "website-url": {
-                    "example": "https://dnadoeproject.org/case/rock-co-john-doe-1981/"
-                  },
-                  "contact-url": {
-                    "example": "any"
-                  }
+      "post": {
+        "tags": ["Score"],
+        "description": "Adds score to the database from the complewted game",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "score": {
+                  "example": "138123"
                 }
               }
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/scores/{id}": {
+      "get": {
+        "tags": ["Score"],
+        "description": "Get score by user ID (This may not work unless we have a user collection containing a score property)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "/scores": {
-        "get": {
-          "tags": [
-            "Score"
-          ],
-          "description": "Retrieve all scores from the collection.",
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+      "delete": {
+        "tags": ["Score"],
+        "description": "Removes a score from the database. If wanting to display the top 10 or 20 scores, as scores are added, lower scores can be removed using this API, giving the API the ID of the score.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
-        },
-        "post": {
-          "tags": [
-            "Score"
-          ],
-          "description": "Adds score to the database from the complewted game",
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "score": {
-                    "example": "138123"
-                  }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Score"],
+        "description": "Update a specific score found by giving the API an ID. As scores are added, other scores may need to move up or down. This API does that.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ranking": {
+                  "example": "12"
+                },
+                "username": {
+                  "example": "GhostRider123"
+                },
+                "score": {
+                  "example": "138123"
                 }
               }
             }
-          ],
-          "responses": {
-            "201": {
-              "description": "Created"
-            },
-            "400": {
-              "description": "Bad Request"
-            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/games": {
+      "get": {
+        "tags": ["Game"],
+        "description": "Retreives all game objects from collection. The game object will have a card-size property and an array of case file objects proportional to the card-size. ",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "/scores/{id}": {
-        "get": {
-          "tags": [
-            "Score"
-          ],
-          "description": "Get score by user ID (This may not work unless we have a user collection containing a score property)",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "delete": {
-          "tags": [
-            "Score"
-          ],
-          "description": "Removes a score from the database. If wanting to display the top 10 or 20 scores, as scores are added, lower scores can be removed using this API, giving the API the ID of the score.",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "put": {
-          "tags": [
-            "Score"
-          ],
-          "description": "Update a specific score found by giving the API an ID. As scores are added, other scores may need to move up or down. This API does that.",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "body",
-              "in": "body",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "ranking": {
-                    "example": "12"
-                  },
-                  "username": {
-                    "example": "GhostRider123"
-                  },
-                  "score": {
-                    "example": "138123"
-                  }
+      "post": {
+        "tags": ["Game"],
+        "description": "Create a game object to be stored in the database. Exploring an option to randomize case files instead of making someone create the game case files array.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "case-files": {
+                  "example": [
+                    {
+                      "Case File 1": "ObjectId('0000000000000')"
+                    },
+                    {
+                      "Case File 2": "ObjectId('0000000000000')"
+                    },
+                    {
+                      "Case File 3": "ObjectId('0000000000000')"
+                    },
+                    {
+                      "Case File 4": "ObjectId('0000000000000')"
+                    }
+                  ]
+                },
+                "case-size": {
+                  "example": "15"
                 }
               }
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/games/{id}": {
+      "get": {
+        "tags": ["Game"],
+        "description": "Pass an ID to this endpoint to retrieve a specific game object.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "/games": {
-        "get": {
-          "tags": [
-            "Game"
-          ],
-          "description": "Retreives all game objects from collection. The game object will have a card-size property and an array of case file objects proportional to the card-size. ",
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+      "delete": {
+        "tags": ["Game"],
+        "description": "Pass an ID to this endpoint to delete a specific game object.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
-        },
-        "post": {
-          "tags": [
-            "Game"
-          ],
-          "description": "Create a game object to be stored in the database. Exploring an option to randomize case files instead of making someone create the game case files array.",
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "case-files": {
-                    "example": [
-                      {
-                        "Case File 1": "ObjectId('0000000000000')"
-                      },
-                      {
-                        "Case File 2": "ObjectId('0000000000000')"
-                      },
-                      {
-                        "Case File 3": "ObjectId('0000000000000')"
-                      },
-                      {
-                        "Case File 4": "ObjectId('0000000000000')"
-                      }
-
-                    ]
-                  },
-                  "case-size": {
-                    "example": "15"
-                  }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Game"],
+        "description": "Give this endpoint an ID number to update a specific game object.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "case-files": {
+                  "example": [
+                    {
+                      "Case File 1": "ObjectId('0000000000000')"
+                    },
+                    {
+                      "Case File 2": "ObjectId('0000000000000')"
+                    },
+                    {
+                      "Case File 3": "ObjectId('0000000000000')"
+                    },
+                    {
+                      "Case File 4": "ObjectId('0000000000000')"
+                    }
+                  ]
+                },
+                "case-size": {
+                  "example": "15"
                 }
               }
             }
-          ],
-          "responses": {
-            "201": {
-              "description": "Created"
-            },
-            "400": {
-              "description": "Bad Request"
-            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/games/{card-size}": {
+      "get": {
+        "tags": ["Game"],
+        "description": "Pass a card-size to this endpoint to retrieve a specific game object based on card-size",
+        "parameters": [
+          {
+            "name": "card-size",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "/games/{id}": {
-        "get": {
-          "tags": [
-            "Game"
-          ],
-          "description": "Pass an ID to this endpoint to retrieve a specific game object.",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+      "delete": {
+        "tags": ["Game"],
+        "description": "Pass a card-size to this endpoint to delete a specific game object.",
+        "parameters": [
+          {
+            "name": "card-size",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
-        },
-        "delete": {
-          "tags": [
-            "Game"
-          ],
-          "description": "Pass an ID to this endpoint to delete a specific game object.",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
-        },
-        "put": {
-          "tags": [
-            "Game"
-          ],
-          "description": "Give this endpoint an ID number to update a specific game object.",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "body",
-              "in": "body",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "case-files": {
-                    "example": [
-                      {
-                        "Case File 1": "ObjectId('0000000000000')"
-                      },
-                      {
-                        "Case File 2": "ObjectId('0000000000000')"
-                      },
-                      {
-                        "Case File 3": "ObjectId('0000000000000')"
-                      },
-                      {
-                        "Case File 4": "ObjectId('0000000000000')"
-                      }
-
-                    ]
-                  },
-                  "case-size": {
-                    "example": "15"
-                  }
+        }
+      },
+      "put": {
+        "tags": ["Game"],
+        "description": "Give this endpoint a card-size to update a specific game object. Won't work if you have several game objects with the same card-size.",
+        "parameters": [
+          {
+            "name": "card-size",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "case-files": {
+                  "example": [
+                    {
+                      "Case File 1": "ObjectId('0000000000000')"
+                    },
+                    {
+                      "Case File 2": "ObjectId('0000000000000')"
+                    },
+                    {
+                      "Case File 3": "ObjectId('0000000000000')"
+                    },
+                    {
+                      "Case File 4": "ObjectId('0000000000000')"
+                    }
+                  ]
+                },
+                "case-size": {
+                  "example": "15"
                 }
               }
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": ["User"],
+        "description": "Retrieves currently logged in user details such as given name, nickname, name, email, picture and whether email has been verified.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/agencies": {
+      "get": {
+        "tags": ["Agency Information"],
+        "description": "Get a list of all agencies and their information.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "/games/{card-size}": {
-        "get": {
-          "tags": [
-            "Game"
-          ],
-          "description": "Pass a card-size to this endpoint to retrieve a specific game object based on card-size",
-          "parameters": [
-            {
-              "name": "card-size",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "delete": {
-          "tags": [
-            "Game"
-          ],
-          "description": "Pass a card-size to this endpoint to delete a specific game object.",
-          "parameters": [
-            {
-              "name": "card-size",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "put": {
-          "tags": [
-            "Game"
-          ],
-          "description": "Give this endpoint a card-size to update a specific game object. Won't work if you have several game objects with the same card-size.",
-          "parameters": [
-            {
-              "name": "card-size",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "body",
-              "in": "body",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "case-files": {
-                    "example": [
-                      {
-                        "Case File 1": "ObjectId('0000000000000')"
-                      },
-                      {
-                        "Case File 2": "ObjectId('0000000000000')"
-                      },
-                      {
-                        "Case File 3": "ObjectId('0000000000000')"
-                      },
-                      {
-                        "Case File 4": "ObjectId('0000000000000')"
-                      }
-
-                    ]
-                  },
-                  "case-size": {
-                    "example": "15"
-                  }
+      "post": {
+        "tags": ["Agency Information"],
+        "description": "Adds a new agency to the list of agencies in the database.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "Baker Co Sheriff's Office, Detective Division"
+                },
+                "supervisor": {
+                  "example": "David Mancini, Lieutenant"
+                },
+                "phone": {
+                  "example": "904-259-9218"
+                },
+                "email": {
+                  "example": "david.mancini@bakerso.com"
                 }
               }
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/agencies/{id}": {
+      "get": {
+        "tags": ["Agency Information"],
+        "description": "Pass an ID to this endpoint to retrieve a specific agency.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "/user": {
-        "get": {
-          "tags": [
-            "User"
-          ],
-          "description": "Retrieves currently logged in user details such as given name, nickname, name, email, picture and whether email has been verified.",
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+      "delete": {
+        "tags": ["Agency Information"],
+        "description": "Pass an ID to this endpoint to delete a specific agency from the list of agencies.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "/agencies": {
-        "get": {
-          "tags": [
-            "Agency Information"
-          ],
-          "description": "Get a list of all agencies and their information.",
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "post": {
-          "tags": [
-            "Agency Information"
-          ],
-          "description": "Adds a new agency to the list of agencies in the database.",
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "example": "Baker Co Sheriff's Office, Detective Division"
-                  },
-                  "supervisor": {
-                    "example": "David Mancini, Lieutenant"
-                  },
-                  "phone": {
-                    "example": "904-259-9218"
-                  },
-                  "email": {
-                    "example": "david.mancini@bakerso.com"
-                  }
+      "put": {
+        "tags": ["Agency Information"],
+        "description": "Give this endpoint an ID number to update a specific agency from the list of agencies.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "Baker Co Sheriff's Office, Detective Division"
+                },
+                "supervisor": {
+                  "example": "David Mancini, Lieutenant"
+                },
+                "phone": {
+                  "example": "904-259-9218"
+                },
+                "email": {
+                  "example": "david.mancini@bakerso.com"
                 }
               }
             }
-          ],
-          "responses": {
-            "201": {
-              "description": "Created"
-            },
-            "400": {
-              "description": "Bad Request"
-            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/agencies/{agency-name}": {
+      "get": {
+        "tags": ["Agency Information"],
+        "description": "Give this endpoint an agency name to retrieve that agency's information.",
+        "parameters": [
+          {
+            "name": "agency-name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "/agencies/{id}": {
-        "get": {
-          "tags": [
-            "Agency Information"
-          ],
-          "description": "Pass an ID to this endpoint to retrieve a specific agency.",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+      "delete": {
+        "tags": ["Agency Information"],
+        "description": "Give the agency name to this endpoint to delete that agency's information from the database.",
+        "parameters": [
+          {
+            "name": "agency-name",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
-        },
-        "delete": {
-          "tags": [
-            "Agency Information"
-          ],
-          "description": "Pass an ID to this endpoint to delete a specific agency from the list of agencies.",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "put": {
-          "tags": [
-            "Agency Information"
-          ],
-          "description": "Give this endpoint an ID number to update a specific agency from the list of agencies.",
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "body",
-              "in": "body",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "example": "Baker Co Sheriff's Office, Detective Division"
-                  },
-                  "supervisor": {
-                    "example": "David Mancini, Lieutenant"
-                  },
-                  "phone": {
-                    "example": "904-259-9218"
-                  },
-                  "email": {
-                    "example": "david.mancini@bakerso.com"
-                  }
-                }
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "/agencies/{agency-name}": {
-        "get": {
-          "tags": [
-            "Agency Information"
-          ],
-          "description": "Give this endpoint an agency name to retrieve that agency's information.",
-          "parameters": [
-            {
-              "name": "agency-name",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "delete": {
-          "tags": [
-            "Agency Information"
-          ],
-          "description": "Give the agency name to this endpoint to delete that agency's information from the database.",
-          "parameters": [
-            {
-              "name": "agency-name",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
-          }
-        },
-        "put": {
-          "tags": [
-            "Agency Information"
-          ],
-          "description": "Give this endpoint an agency name to update a specific agency from the list of agencies.",
-          "parameters": [
-            {
-              "name": "agency-name",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "body",
-              "in": "body",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "agency-name": {
-                    "example": "Baker Co Sheriff's Office, Detective Division"
-                  },
-                  "supervisor-name": {
-                    "example": "David Mancini, Lieutenant"
-                  },
-                  "phone-number": {
-                    "example": "904-259-9218"
-                  },
-                  "email": {
-                    "example": "david.mancini@bakerso.com"
-                  }
+      "put": {
+        "tags": ["Agency Information"],
+        "description": "Give this endpoint an agency name to update a specific agency from the list of agencies.",
+        "parameters": [
+          {
+            "name": "agency-name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "agency-name": {
+                  "example": "Baker Co Sheriff's Office, Detective Division"
+                },
+                "supervisor-name": {
+                  "example": "David Mancini, Lieutenant"
+                },
+                "phone-number": {
+                  "example": "904-259-9218"
+                },
+                "email": {
+                  "example": "david.mancini@bakerso.com"
                 }
               }
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/agencies/{phone-number}": {
+      "get": {
+        "tags": ["Agency Information"],
+        "description": "Give this endpoint an agency phone number to retrieve that agency's information.",
+        "parameters": [
+          {
+            "name": "phone-number",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "/agencies/{phone-number}": {
-        "get": {
-          "tags": [
-            "Agency Information"
-          ],
-          "description": "Give this endpoint an agency phone number to retrieve that agency's information.",
-          "parameters": [
-            {
-              "name": "phone-number",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+      "delete": {
+        "tags": ["Agency Information"],
+        "description": "Give the agency phone number to this endpoint to delete that agency's information from the database.",
+        "parameters": [
+          {
+            "name": "phone-number",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
-        },
-        "delete": {
-          "tags": [
-            "Agency Information"
-          ],
-          "description": "Give the agency phone number to this endpoint to delete that agency's information from the database.",
-          "parameters": [
-            {
-              "name": "phone-number",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
-        },
-        "put": {
-          "tags": [
-            "Agency Information"
-          ],
-          "description": "Give this endpoint an agency phone number to update a specific agency from the list of agencies.",
-          "parameters": [
-            {
-              "name": "agency-name",
-              "in": "path",
-              "required": true,
-              "type": "string"
-            },
-            {
-              "name": "body",
-              "in": "body",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "agency-name": {
-                    "example": "Baker Co Sheriff's Office, Detective Division"
-                  },
-                  "supervisor-name": {
-                    "example": "David Mancini, Lieutenant"
-                  },
-                  "phone-number": {
-                    "example": "904-259-9218"
-                  },
-                  "email": {
-                    "example": "david.mancini@bakerso.com"
-                  }
+        }
+      },
+      "put": {
+        "tags": ["Agency Information"],
+        "description": "Give this endpoint an agency phone number to update a specific agency from the list of agencies.",
+        "parameters": [
+          {
+            "name": "agency-name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "agency-name": {
+                  "example": "Baker Co Sheriff's Office, Detective Division"
+                },
+                "supervisor-name": {
+                  "example": "David Mancini, Lieutenant"
+                },
+                "phone-number": {
+                  "example": "904-259-9218"
+                },
+                "email": {
+                  "example": "david.mancini@bakerso.com"
                 }
               }
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "400": {
-              "description": "Bad Request"
-            },
-            "404": {
-              "description": "Not Found"
-            },
-            "500": {
-              "description": "Internal Server Error"
-            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     }
   }
+}
