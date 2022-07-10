@@ -5,7 +5,7 @@ const caseSchema = new mongoose.Schema({
   caseName: String,
   summariedCaseDescription: String,
   caseType: String,
-  victimPicture: { base64: String, imageFormat: String },
+  victimPicture: String,
   victimName: String,
   victimAge: Number,
   caseDate: Date,
