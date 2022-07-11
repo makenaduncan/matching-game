@@ -4,8 +4,8 @@ POST fp-matching-game.herokuapp.com/cases HTTP/1.1
 content-type: application/json
 
 {
-  "caseName": "delete",
-  "summarizedCaseDescription": "any",
+  "caseName": "Baker Co John Doe 1995",
+  "summarizedCaseDescription": "delete",
   "caseType": "homicide; missing persons, etc.",
   "victimPicture": "iVBORw0KGgoAAAANSUhEUgAAAlgAAAJYCAYAAAC+ZpjcAAAACXBI
 WXMAAA7EAAAOxAGVKw4bAAAgAElEQVR4nOy9aZfkOLKe+RhA0t0jIpeq7qruq6vRx/kDc+b//4
@@ -2207,11 +2207,11 @@ RFOTMqsBRFURRFUc6MCixFURRFUZQzowJLURRFURTlzKjAUhRFURRFOTMqsBRFURRFUc6MCixF
 URRFUZQzowJLURRFURTlzKjAUhRFURRFOTMqsBRFURRFUc6MCixFURRFUZQzowJLURRFURTlzK
 jAUhRFURRFOTMqsBRFURRFUc6MCixFURRFUZQzowJLURRFURTlzKjAUhRFURRFOTMqsBRFURRF
 Uc7M/weYdtGlTRY84wAAAABJRU5ErkJggg==",
-  "victimName": "any",
-  "victimAge": "any",
-  "caseDate": "any",
-  "location": "any",
+  "victimName": "delete",
+  "victimAge": "delete",
+  "caseDate": "delete",
+  "location": "delete",
   "caseStatus": "unsolved",
   "websiteUrl": "https://dnadoeproject.org/case/rock-co-john-doe-1981/",
-  "agencyInformation": "1.2304320239485405e+21",
+  "agencyInformation": 1.2304320239485405e+21
 }

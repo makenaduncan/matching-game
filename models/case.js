@@ -7,7 +7,7 @@ const caseSchema = new mongoose.Schema({
   caseType: String,
   victimPicture: String,
   victimName: String,
-  victimAge: Number,
+  victimAge: String,
   caseDate: Date,
   location: String,
   caseStatus: String,
