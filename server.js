@@ -7,7 +7,6 @@ const cors = require("cors");
 const User = require('./models/user');
 
 const { auth } = require("express-openid-connect");
-const { get } = require("mongoose");
 
 const config = {
   authRequired: false,
@@ -28,14 +27,14 @@ app.use(cors({
 // req.isAuthenticated is provided from the auth router
 app.get("/", (req, res) => {
   res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
+
+  
+
 });
 
 app.use((req, res, next) => {
 
-  // Find out if user is in the collection already.
-  // If not, Create new user object based on OIDC and add to collection.
-  // If they are in collection, update last login time and increment number of calls.
-  // Set req.user equal to the whole user object of the colletion for the user.
+  getUser(req, res);
   
   res.setHeader('Access-Control-Allow-Origin', '*');
   next();
@@ -52,6 +51,37 @@ app.get("/user", requiresAuth(), (req, res) => {
   }
   
 });
+
+
+ const getUser = async (req, res) => {
+
+  // Check if user is signed in already
+  if (req.oidc.isAuthenticated())
+  {
+    // Prevents duplicate calls.
+    if (req.user != null)
+    {
+      return req.user;
+    }
+
+    // Get user from database (if there is one) that matches the 
+    dbUserEntry = await User.findOne({'username': req.oidc.user.email});
+
+    // If the user exists, then update the last login.
+    if (dbUserEntry != null)
+    {
+      date = new Date();
+      dbUserEntry.lastLogin = date;
+      await dbUserEntry.save();
+      req.user = dbUserEntry;
+      
+      return req.user;
+    }
+    
+    // If user does not exist in the database, create the user and store it.
+
+  }
+}
 
 
 // Use json and also require index file that will reference all other route files.

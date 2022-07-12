@@ -1,5 +1,6 @@
 const url = require("url");
 const Score = require("../models/score");
+const User = require("../models/user");
 
 // /scores endpoints
 
@@ -42,6 +43,21 @@ const createScores = async (req, res) => {
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
+
+  // Find out if the new score is higher than the user's highest score. Update highest score if true.
+  if (score.username == req.oidc.user.email)
+  {
+
+    user = await User.findOne({'email': req.oidc.user.email});
+
+    if (score.score > user.highestScore)
+    {
+      user.highestScore = score.score;
+      await user.save();
+    }
+    
+  }
+
 };
 
 // /scores/{id} ENDPOINTS
@@ -124,9 +140,5 @@ module.exports = {
   getScoreWithID,
   deleteScoreWithID,
   updateScoreWithID,
-  //   getScoreWithRanking,
-  //   deleteScoreWithRanking,
-  //   updateScoreWithRanking,
   getScoreById,
-  //   getScoreByRanking,
 };
