@@ -64,8 +64,9 @@ app.get("/user", requiresAuth(), (req, res) => {
       return req.user;
     }
 
+    dbUserEntry = null;
     // Get user from database (if there is one) that matches the 
-    dbUserEntry = await User.findOne({'username': req.oidc.user.email});
+    dbUserEntry = await User.findOne({'email': req.oidc.user.email});
 
     // If the user exists, then update the last login.
     if (dbUserEntry != null)
@@ -77,8 +78,30 @@ app.get("/user", requiresAuth(), (req, res) => {
       
       return req.user;
     }
+
+    // Old Time 2022-07-12T03:36:15.807+00:00
+    // New Time 2022-07-12T10:09:17.039+00:00
     
     // If user does not exist in the database, create the user and store it.
+    newUser = new User ({
+
+      name: req.oidc.user.name,
+      email: req.oidc.user.email,
+      creationDate: new Date(),
+      lastLogin: new Date(),
+      gamesCompleted: 0,
+      highestScore: 0
+
+    })
+
+    try {
+      saveUserItem = await newUser.save();
+      console.log("User " + req.oidc.user.name + " created successfully!");
+
+    } catch(err) {
+      console.log("ERR: User was not created.")
+
+    }
 
   }
 }

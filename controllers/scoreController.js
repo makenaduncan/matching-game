@@ -53,8 +53,12 @@ const createScores = async (req, res) => {
     if (score.score > user.highestScore)
     {
       user.highestScore = score.score;
-      await user.save();
+      
     }
+
+    user.gamesCompleted = user.gamesCompleted + 1;
+
+    await user.save();
     
   }
 
