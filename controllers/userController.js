@@ -33,6 +33,7 @@ const createUser = async (req, res) => {
   const user = new User({
     name: req.body.name,
     email: req.body.email,
+    picture: req.body.picture,
     creationDate: date,
     lastLogin: date,
     gamesCompleted: 0, // Can't complete games if you haven't created an account yet!
@@ -71,6 +72,10 @@ const updateUser = async (req, res) => {
 
   if (req.body.name != null) {
     res.user.name = req.body.name;
+  }
+
+  if (req.body.picture != null) {
+    res.user.picture = req.body.picture
   }
 
   if (req.body.email != null) {
