@@ -12,7 +12,7 @@ const getProfile = async (req, res) => {
     res.status(200).json(dbUser);
 
   } catch(err) {
-
+    res.status(500).json({message: err.message});
 
   }
 
@@ -89,17 +89,18 @@ const updateUser = async (req, res) => {
     res.user.name = req.body.name;
   }
 
-  if (req.body.picture != null) {
-    res.user.picture = req.body.picture
-  }
-
   if (req.body.email != null) {
     res.user.email = req.body.email;
   }
 
-  // TODO: Determine if this needs to be here or not.
-  if (req.body.gamesCompleted != null) {
-    res.user.gamesCompleted = req.body.gamesCompleted;
+  try {
+    const updatedUser = await res.user.save();
+
+    res.status(200).json(updatedUser);
+
+  } catch(err) {
+    res.status(400).json({message: err.message});
+
   }
 };
 
@@ -124,6 +125,7 @@ async function getUserById(req, res, next) {
   next();
 }
 
+// Internal Private helper function
 async function getAllUsers() {
 
   users = await User.find()

@@ -87,6 +87,15 @@ const updateAgency = async (req, res) => {
         res.agency.email = req.body.email;
     }
 
+    try {
+        const updatedAgency = await res.agency.save();
+        res.status(200).json(updatedAgency);
+
+    } catch(err) {
+        res.status(400).json({message: err.message});
+
+    }
+
 }
 
 // MIDDLEWARE
@@ -107,6 +116,7 @@ async function getAgencyById(req, res, next) {
     next();
 }
 
+// Internal Private helper function
 async function getAllAgencies()
 {
     agencies = await Agency.find();

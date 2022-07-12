@@ -699,10 +699,10 @@
         }
       }
     },
-    "/user": {
+    "/profile": {
       "get": {
         "tags": ["User"],
-        "description": "Retrieves currently logged in user details such as given name, nickname, name, email, picture and whether email has been verified.",
+        "description": "Retrieves currently logged in user details such as name, email, picture, highest score, total games completed, when account was created, when the last login was, and whether email has been verified.",
         "parameters": [],
         "responses": {
           "200": {
@@ -829,9 +829,6 @@
                 },
                 "email": {
                   "example": "thollandswag@gmail.com"
-                },
-                "gamesCompleted": {
-                  "example": "1"
                 }
               }
             }

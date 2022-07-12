@@ -88,6 +88,7 @@ const deleteScoreWithID = async (req, res) => {
   }
 };
 
+// TODO: Find out if we can remove this as there is no reason to update a score after being saved.
 const updateScoreWithID = async (req, res) => {
   // #swagger.tags = ['Score']
   // #swagger.description = 'Update score item in collection based on ID'
@@ -102,6 +103,15 @@ const updateScoreWithID = async (req, res) => {
 
   if (req.body.score != null) {
     res.score.score = req.body.score;
+  }
+
+  try {
+    const updatedScore = await res.score.save();
+    res.status(200).json(updatedScore);
+
+  } catch(err) {
+    res.status(400).json({message: err.message});
+
   }
 };
 
@@ -125,6 +135,7 @@ async function getScoreById(req, res, next) {
   next();
 }
 
+// Internal Private helper function
 async function getAllScores(email) {
   scores = await Score.find();
   scores = scores.filter((item) => item.username == email);
