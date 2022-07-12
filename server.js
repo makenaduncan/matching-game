@@ -47,23 +47,14 @@ app.get("/", (req, res) => {
 
 app.use((req, res, next) => {
 
-  getUser(req, res);
+  recordUser(req, res);
   
   res.setHeader('Access-Control-Allow-Origin', '*');
   
   next();
 });
 
-// Pulls user information from Auth0 and creates a profile
-app.get("/user", requiresAuth(), (req, res) => {
-  try {
-    res.send(JSON.stringify(req.oidc.user));
-  } catch (err) {
-    res.send(403).json({ message: err.message });
-  }
-});
-
- const getUser = async (req, res) => {
+ const recordUser = async (req, res) => {
 
   // Check if user is signed in already
   if (req.oidc.isAuthenticated())
@@ -75,7 +66,7 @@ app.get("/user", requiresAuth(), (req, res) => {
     }
 
     dbUserEntry = null;
-
+    
     // Get user from database (if there is one) that matches the 
     dbUserEntry = await User.findOne({'email': req.oidc.user.email});
 

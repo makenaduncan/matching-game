@@ -5,6 +5,9 @@ const {requiresAuth} = require('express-openid-connect')
 // Require Controller
 const users = require('../controllers/userController');
 
+// /score GET single user based on data passed by Auth0
+router.get('/profile', requiresAuth(), users.getProfile)
+
 // /scores GET
 router.get('/users', requiresAuth(), users.getUsers);
 

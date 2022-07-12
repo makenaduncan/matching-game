@@ -1,7 +1,22 @@
-const url = require("url");
 const Score = require("../models/score");
 const User = require("../models/user");
 
+
+const getProfile = async (req, res) => {
+
+  try {
+    // Find corresponding auth0 user in database and display that
+    // since we have more properties we want to display.
+    const dbUser = await User.findOne({'email': req.oidc.user.email});
+
+    res.status(200).json(dbUser);
+
+  } catch(err) {
+
+
+  }
+
+}
 
 const getUsers = async (req, res) => {
 
@@ -95,7 +110,6 @@ async function getUserById(req, res, next) {
 
   try {
     user = await User.findById(req.params.id)
-    .populate("highestScore");
 
     if (user == null) {
       return res.status(404).json({
@@ -113,12 +127,12 @@ async function getUserById(req, res, next) {
 async function getAllUsers() {
 
   users = await User.find()
-  .populate("highestScore");
 
   return users;
 }
 
 module.exports = {
+  getProfile,
   getUsers,
   createUser,
   getUser,
