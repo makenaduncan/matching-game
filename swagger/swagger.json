@@ -5,7 +5,7 @@
     "description": "API endpoints to retrieve information such as cold case data, matching game score list, and game information.",
     "version": "1.0.0"
   },
-  "host": ["fp-matching-game.herokuapp.com"],
+  "host": ["localhost:3000"],
   "basePath": "/",
   "tags": [
     {
@@ -65,16 +65,16 @@
                   "example": "homicide; missing persons, etc."
                 },
                 "victimPicture": {
-                  "example": "any"
+                  "example": "paste base 64 of image here"
                 },
                 "victimName": {
-                  "example": "any"
+                  "example": "Unknown"
                 },
                 "victimAge": {
-                  "example": "any"
+                  "example": "15"
                 },
                 "caseDate": {
-                  "example": "any"
+                  "example": "2022-10-15"
                 },
                 "location": {
                   "example": "any"
@@ -86,7 +86,7 @@
                   "example": "https://dnadoeproject.org/case/rock-co-john-doe-1981/"
                 },
                 "agencyInformation": {
-                  "example": "1230432023948540398234"
+                  "example": "62c6594f19deccde1e79c40d"
                 }
               }
             }
@@ -252,38 +252,38 @@
             "schema": {
               "type": "object",
               "properties": {
-                "case-name": {
+                "caseName": {
                   "example": "Baker Co John Doe 1995"
                 },
-                "summarized-case-description": {
-                  "example": "any"
+                "summarizedCaseDescription": {
+                  "example": "Insert brief description here."
                 },
-                "case-type": {
-                  "example": "homicide; missing persons, etc."
+                "caseType": {
+                  "example": "homicide; missing persons; etc."
                 },
-                "victim-picture": {
-                  "example": "any"
+                "victimPicture": {
+                  "example": "paste base 64 of image here"
                 },
-                "victim-name": {
-                  "example": "any"
+                "victimName": {
+                  "example": "Unknown"
                 },
-                "victim-age": {
-                  "example": "any"
+                "victimAge": {
+                  "example": "15"
                 },
-                "date-body-found": {
-                  "example": "any"
+                "caseDate": {
+                  "example": "2022-10-15"
                 },
                 "location": {
-                  "example": "any"
+                  "example": "Beaver Creek Township, MN"
                 },
-                "status": {
+                "caseStatus": {
                   "example": "unsolved"
                 },
-                "website-url": {
+                "websiteUrl": {
                   "example": "https://dnadoeproject.org/case/rock-co-john-doe-1981/"
                 },
-                "contact-url": {
-                  "example": "any"
+                "agencyInformation (ObjectID as string)": {
+                  "example": "62c6594f19deccde1e79c40d"
                 }
               }
             }

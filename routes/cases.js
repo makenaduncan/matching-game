@@ -11,9 +11,9 @@ router.post('/cases', requiresAuth(), cases.createCases);
 
 router.get('/cases/:id', cases.getCaseById, cases.getCase);
 
-// router.delete('/cases/:id', requiresAuth(), cases.getCaseById, cases.deleteCase);
+ router.delete('/cases/:id', requiresAuth(), cases.getCaseById, cases.deleteCase);
 
-// router.put('/cases/:id', requiresAuth(), cases.getCaseById, cases.updateCase);
+ router.put('/cases/:id', requiresAuth(), cases.getCaseById, cases.updateCase);
 
 
 module.exports = router;

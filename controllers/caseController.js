@@ -64,35 +64,80 @@ const getCase = async (req, res) => {
 
 }
 
-// const deleteCase = async (req, res) => {
+const deleteCase = async (req, res) => {
 
-//     try {
-//         await res.score.deleteOne();
-//         res.status(200).json({message: "Delete Successful."});
-//     } catch(err) {
-//         res.status(400).json({message:err.message});
-//     }
+    try {
+        await res.case.deleteOne();
+        res.status(200).json({message: "Delete Successful."});
+    } catch(err) {
+        res.status(400).json({message: err.message});
+    }
 
-// }
+}
 
-// const updateCase = async (req, res) => {
+const updateCase = async (req, res) => {
 
-//     if(req.body.ranking != null)
-//     {
-//         res.score.ranking = req.body.ranking;
-//     }
+    if(req.body.caseName != null)
+    {
+        res.case.caseName = req.body.caseName;
+    }
 
-//     if(req.body.username != null)
-//     {
-//         res.score.username = req.body.username;
-//     }
+    if(req.body.summarizedCaseDescription != null) {
+        res.case.summarizedCaseDescription = req.body.summarizedCaseDescription;
+    }
 
-//     if(req.body.score != null)
-//     {
-//         res.score.score = req.body.score;
-//     }
+    if(req.body.caseType != null)
+    {
+        res.case.caseType = req.body.caseType;
+    }
+    if(req.body.victimPicture != null)
+    {
+        res.case.victimPicture = req.body.victimPicture;
+    }
+    if(req.body.victimName != null)
+    {
+        res.case.victimName = req.body.victimName;
+    }
+    if(req.body.victimAge != null)
+    {
+        res.case.victimAge = req.body.victimAge;
+    }
+    if(req.body.caseDate != null)
+    {
+        res.case.caseDate = req.body.caseDate;
+    }
+    if(req.body.location != null)
+    {
+        res.case.location = req.body.location;
+    }
+    if(req.body.caseStatus != null)
+    {
+        res.case.caseStatus = req.body.caseStatus;
+    }
+    if(req.body.websiteUrl != null)
+    {
+        res.case.websiteUrl = req.body.websiteUrl;
+    }
+    if(req.body.agencyInformation != null)
+    {
+        // Load agency information based on ID of agency.
+        agency = await Agency.findById(req.body.agencyInformation);
 
-// }
+        if (agency != null)
+        {
+            res.case.agencyInformation = agency._id;
+        }
+    }
+
+    try {
+        const updatedCase = await res.case.save();
+        res.status(200).json(updatedCase);
+
+    } catch(err) {
+        res.status(400).json({message: err.message});
+    }
+
+}
 
 
 // // MIDDLEWARE
@@ -126,5 +171,7 @@ module.exports = {
     getCases,
     createCases,
     getCase,
+    deleteCase,
+    updateCase,
     getCaseById
 }
