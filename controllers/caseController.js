@@ -39,7 +39,7 @@ const createCases = async (req, res) => {
         websiteUrl: req.body.websiteUrl
     })
     
-    // Load
+    // Load agency information based on ID of agency.
     agency = await Agency.findById(req.body.agencyInformation);
 
     Newcase.agencyInformation = agency._id;
@@ -64,10 +64,7 @@ const getCase = async (req, res) => {
 
 }
 
-// const deleteScoreWithID = async (req, res) => {
-
-//     // #swagger.tags = ['Score']
-//     // #swagger.description = 'Get score item in collection based on ID'
+// const deleteCase = async (req, res) => {
 
 //     try {
 //         await res.score.deleteOne();
@@ -78,10 +75,7 @@ const getCase = async (req, res) => {
 
 // }
 
-// const updateScoreWithID = async (req, res) => {
-
-//     // #swagger.tags = ['Score']
-//     // #swagger.description = 'Update score item in collection based on ID'
+// const updateCase = async (req, res) => {
 
 //     if(req.body.ranking != null)
 //     {
@@ -111,7 +105,7 @@ async function getCaseById(req, res, next) {
 
         if(caseItem == null)
         {
-            return res.status(404).json({message: "Could not find specified score by ID. Check ID and try again."});
+            return res.status(404).json({message: "Could not find specified case by ID. Check ID and try again."});
         }
     } catch(err) {
         return res.status(500).json({message: err.message});

@@ -4,8 +4,10 @@ const userSchema = new mongoose.Schema({
 
     name: String,
     email: String,
-    lastLogin: String
-
+    creationDate: Date,
+    lastLogin: Date,
+    gamesCompleted: Number,
+    highestScore: Number
 });
 
 const user = mongoose.model('User', userSchema, "user");

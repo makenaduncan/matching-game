@@ -8,7 +8,6 @@ const cors = require("cors");
 const User = require("./models/user");
 
 const { auth } = require("express-openid-connect");
-const { get } = require("mongoose");
 
 const config = {
   authRequired: false,
@@ -41,15 +40,17 @@ app.use(
 // req.isAuthenticated is provided from the auth router
 app.get("/", (req, res) => {
   res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
+
+  
+
 });
 
 app.use((req, res, next) => {
-  // Find out if user is in the collection already.
-  // If not, Create new user object based on OIDC and add to collection.
-  // If they are in collection, update last login time and increment number of calls.
-  // Set req.user equal to the whole user object of the colletion for the user.
 
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  getUser(req, res);
+  
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  
   next();
 });
 
@@ -61,6 +62,59 @@ app.get("/user", requiresAuth(), (req, res) => {
     res.send(403).json({ message: err.message });
   }
 });
+
+ const getUser = async (req, res) => {
+
+  // Check if user is signed in already
+  if (req.oidc.isAuthenticated())
+  {
+    // Prevents duplicate calls.
+    if (req.user != null)
+    {
+      return req.user;
+    }
+
+    dbUserEntry = null;
+    // Get user from database (if there is one) that matches the 
+    dbUserEntry = await User.findOne({'email': req.oidc.user.email});
+
+    // If the user exists, then update the last login.
+    if (dbUserEntry != null)
+    {
+      date = new Date();
+      dbUserEntry.lastLogin = date;
+      await dbUserEntry.save();
+      req.user = dbUserEntry;
+      
+      return req.user;
+    }
+
+    // Old Time 2022-07-12T03:36:15.807+00:00
+    // New Time 2022-07-12T10:09:17.039+00:00
+    
+    // If user does not exist in the database, create the user and store it.
+    newUser = new User ({
+
+      name: req.oidc.user.name,
+      email: req.oidc.user.email,
+      creationDate: new Date(),
+      lastLogin: new Date(),
+      gamesCompleted: 0,
+      highestScore: 0
+
+    })
+
+    try {
+      saveUserItem = await newUser.save();
+      console.log("User " + req.oidc.user.name + " created successfully!");
+
+    } catch(err) {
+      console.log("ERR: User was not created.")
+
+    }
+
+  }
+}
 
 // Use json and also require index file that will reference all other route files.
 app.use(express.json());
