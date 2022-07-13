@@ -139,6 +139,5 @@ module.exports = {
   createScores,
   getScoreWithID,
   deleteScoreWithID,
-  updateScoreWithID,
-  getScoreById,
+  getScoreById
 };

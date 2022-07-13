@@ -21,12 +21,4 @@ router.delete(
   scores.deleteScoreWithID
 );
 
-// /scores/{id} UPDATE
-router.put(
-  "/scores/:id",
-  requiresAuth(),
-  scores.getScoreById,
-  scores.updateScoreWithID
-);
-
 module.exports = router;

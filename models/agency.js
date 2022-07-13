@@ -4,7 +4,7 @@ const agencySchema = new mongoose.Schema({
 
     name: String,
     supervisor: String,
-    supervisorRank:String,
+    supervisorRank: String,
     phone: String,
     email: String
 

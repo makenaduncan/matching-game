@@ -8,7 +8,6 @@ const getAgencies = async (req, res) => {
     try {
         // Save queries made by front end
         const queryObject = req.query;
-        console.log(queryObject)
         
         agencies = await getAllAgencies();
 
