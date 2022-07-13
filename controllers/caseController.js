@@ -12,10 +12,20 @@ const getCases = async (req, res) => {
         var result = cases;
 
         // Query
-        // if(queryObject.name != null)
-        // {
-        //    result = scores.filter(item => item.name == queryObject.name);
-        // }
+        if(queryObject.caseType != null)
+        {
+           result = cases.filter(item => item.caseType == queryObject.caseType);
+        }
+        if(queryObject.caseDate != null)
+        {
+           result = cases.filter(item => item.caseDate == queryObject.caseDate);
+        }
+        if(queryObject.caseStatus != null)
+        {
+           result = cases.filter(item => item.caseStatus == queryObject.caseStatus);
+        }
+
+
 
         res.status(200).json(result);
     } catch(err) {

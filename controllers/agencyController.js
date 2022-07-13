@@ -8,6 +8,7 @@ const getAgencies = async (req, res) => {
     try {
         // Save queries made by front end
         const queryObject = req.query;
+        console.log(queryObject)
         
         agencies = await getAllAgencies();
 
@@ -16,7 +17,19 @@ const getAgencies = async (req, res) => {
         // Query
         if(queryObject.name != null)
         {
-           result = scores.filter(item => item.name == queryObject.name);
+           result = agencies.filter(item => item.name == queryObject.name);
+        }
+        if(queryObject.phone != null)
+        {
+           result = agencies.filter(item => item.phone == queryObject.phone);
+        }
+        if(queryObject.supervisor != null)
+        {
+           result = agencies.filter(item => item.supervisor == queryObject.supervisor);
+        }
+        if(queryObject.supervisorRank != null)
+        {
+           result = agencies.filter(item => item.supervisorRank == queryObject.supervisorRank);
         }
 
         res.status(200).json(result);
@@ -30,6 +43,7 @@ const createAgencies = async (req, res) => {
     const agency = new Agency ({
         name: req.body.name,
         supervisor: req.body.supervisor,
+        supervisorRank: req.body.supervisorRank,
         phone: req.body.phone,
         email: req.body.email
     })
@@ -76,6 +90,10 @@ const updateAgency = async (req, res) => {
     if(req.body.supervisor != null)
     {
         res.agency.supervisor = req.body.supervisor;
+    }
+    if(req.body.supervisorRank != null)
+    {
+        res.agency.supervisorRank = req.body.supervisorRank;
     }
 
     if(req.body.phone != null)

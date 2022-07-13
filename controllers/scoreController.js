@@ -2,24 +2,29 @@ const url = require("url");
 const Score = require("../models/score");
 const User = require("../models/user");
 
-// /scores endpoints
 
 const getScores = async (req, res) => {
-  // #swagger.tags = ['Score']
-  // #swagger.description = 'Get all score items in collection'
+
 
   try {
     // Save queries made by front end
     const queryObject = req.query;
+    console.log(queryObject);
 
     // Pass in email as username to get
-    scores = await getAllScores(req.oidc.user.email);
+    scores = await getAllScores();
 
     var result = scores;
 
     // Query
     if (queryObject.ranking != null) {
       result = scores.filter((item) => item.ranking == queryObject.ranking);
+    }
+    if (queryObject.username != null) {
+
+        result = scores.filter((item) => item.username == queryObject.username)
+
+        result = getRanking(result);
     }
 
     res.status(200).json(result);
@@ -136,19 +141,25 @@ async function getScoreById(req, res, next) {
 }
 
 // Internal Private helper function
-async function getAllScores(email) {
+async function getAllScores() {
   scores = await Score.find();
-  scores = scores.filter((item) => item.username == email);
 
+  var result = getRanking(scores)
+  return result;
+}
+
+
+function getRanking(scores)
+{
   var result = scores.sort((a, b) => b.score - a.score);
 
   index = 1;
   result.forEach((score) => {
     score.ranking = index++;
   });
-  return scores;
-}
 
+  return result
+}
 module.exports = {
   getScores,
   createScores,

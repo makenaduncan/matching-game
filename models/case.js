@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const agencySchema = require("./agency");
 
 const caseSchema = new mongoose.Schema({
   caseName: String,

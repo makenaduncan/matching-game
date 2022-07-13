@@ -4,7 +4,7 @@ const { requiresAuth } = require("express-openid-connect");
 // Require Controller
 const scores = require("../controllers/scoreController");
 
-// /scores GET
+// /scores GET global
 router.get("/scores", scores.getScores);
 
 // /scores POST
