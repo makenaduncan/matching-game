@@ -304,50 +304,6 @@
             "description": "Internal Server Error"
           }
         }
-      },
-      "put": {
-        "tags": ["Score"],
-        "description": "Update a specific score found by giving the API an ID. As scores are added, other scores may need to move up or down. This API does that.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "ranking": {
-                  "example": "12"
-                },
-                "username": {
-                  "example": "GhostRider123"
-                },
-                "score": {
-                  "example": "138123"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        }
       }
     },
     "/profile": {

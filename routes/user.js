@@ -20,8 +20,4 @@ router.get('/users/:id', requiresAuth(), users.getUserById, users.getUser);
 // /scores/{id} DELETE
 router.delete('/users/:id', requiresAuth(), users.getUserById, users.deleteUser);
 
-// /scores/{id} UPDATE
-router.put('/users/:id', requiresAuth(), users.getUserById, users.updateUser);
-
-
 module.exports = router;
