@@ -18,20 +18,48 @@ GET http://localhost:3000/agencies/62ca196358b7be242b7bc43c
 # DELETE /agencies/id
 
 # GET /cases
+GET http://localhost:3000/cases
+
+###
+
 # GET /cases/id
+GET http://localhost:3000/cases/62cc38c3c4e0a606952e9ac5
+
+###
+
 # POST /cases
 # PUT /cases/id
 # DELETE /cases/id
 
 # GET /scores
+GET http://localhost:3000/scores
+
+###
+
 # GET /scores/id
+GET http://localhost:3000/scores/62c5ec4ce2a60162506ec1c1
+
+###
+
 # POST /scores
 # PUT /scores/id
 # DELETE /scores/id
 
 # GET /profile
+GET http://localhost:3000/profile
+
+###
+
 # GET /users
+GET http://localhost:3000/users
+
+###
+
 # GET /users/id
+GET http://localhost:3000/users/62cd4c88a71e3efc07539f5e
+
+###
+
 # POST /users
 # DELETE /users/id
 
