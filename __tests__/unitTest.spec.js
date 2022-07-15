@@ -13,5 +13,22 @@ describe("User Test Suite", () => {
     expect(response.statusCode).toBe(302);
   });
 
-  // POST for cases
+  it("test post /cases endpoints", async () => {
+    const body = {
+      caseName: "Unidentified John Doe",
+      caseType: "Unidentified Person",
+      victimPicture: "Unavailable",
+      victimName: "Unknown",
+      victimAge: "22-40",
+      caseDate: "13 August 1984",
+      location: "Rexburg, Idaho",
+      caseStatus: "unsolved",
+      websiteURL: "www.fakeURL.com",
+      agencyInformation: "1324567543287nb67h89kl",
+    };
+    const response = await request("https://fp-matching-game.herokuapp.com")
+      .post("/agencies")
+      .send(body);
+    expect(response.statusCode).toBe(302);
+  });
 });
