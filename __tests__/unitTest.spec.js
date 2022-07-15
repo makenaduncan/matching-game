@@ -12,4 +12,6 @@ describe("User Test Suite", () => {
       .send(body);
     expect(response.statusCode).toBe(302);
   });
+
+  // POST for cases
 });

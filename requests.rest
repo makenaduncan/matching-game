@@ -9,13 +9,36 @@ GET http://localhost:3000/agencies
 
 # GET /agencies/id
 
-GET http://localhost:3000/agencies/62ca196358b7be242b7bc43c
+GET http://localhost:3000/agencies/62ca196358b7be242b7bc43c/62ca126f58b7be242b7bc42e
 
 ###
 
 # POST /agencies
+POST http://localhost:3000/agencies HTTP/1.1 content-type: application/json
+{
+    "name": "test",
+    "supervisor": "test",
+    "phone": "000-000-0000",
+    "email": "test@test.com"
+}
+
+###
+
 # PUT /agencies/id
+PUT http://localhost:3000/agencies/  HTTP/1.1 content-type: application/json
+{
+  "name": "updated test",
+  "supervisor": "test",
+  "phone": "111-111-1111",
+  "email": "test@email.com"
+}
+
+###
+
 # DELETE /agencies/id
+DELETE http://localhost:3000/agencies/1234r5t6y7u8889o8p HTTP/1.1 content-type: applicatoin json
+
+###
 
 # GET /cases
 GET http://localhost:3000/cases
@@ -28,8 +51,44 @@ GET http://localhost:3000/cases/62cc38c3c4e0a606952e9ac5
 ###
 
 # POST /cases
+POST http://localhost:3000/cases HTTP/1.1 content-type: application/json
+
+{
+  "caseName": "test",
+  "victimPicture": "test",
+  "victimName": "test",
+  "victimAge": "00",
+  "caseDate": "00 January 0000",
+  "location": "test",
+  "caseStatus": "test",
+  "websiteURL": "test",
+  "agencyInformation": "test"
+}
+
+###
+
 # PUT /cases/id
+PUT http://localhost:3000/cases/ HTTP/1.1 content-type: application/json
+
+{
+  "caseName": "updated test",
+  "victimPicture": "test",
+  "victimName": "test",
+  "victimAge": "00",
+  "caseDate": "00 January 0000",
+  "location": "test",
+  "caseStatus": "test",
+  "websiteURL": "test",
+  "agencyInformation": "test"
+}
+
+
+###
+
 # DELETE /cases/id
+DELETE http://localhost:3000/cases/12334566cfg54derf121 HTTP/1.1 content-type: applicatoin json
+
+###
 
 # GET /scores
 GET http://localhost:3000/scores
@@ -41,9 +100,10 @@ GET http://localhost:3000/scores/62c5ec4ce2a60162506ec1c1
 
 ###
 
-# POST /scores
-# PUT /scores/id
 # DELETE /scores/id
+DELETE http://localhost:3000/scores/ HTTP/1.1 content-type: applicatoin json
+
+###
 
 # GET /profile
 GET http://localhost:3000/profile
@@ -60,8 +120,10 @@ GET http://localhost:3000/users/62cd4c88a71e3efc07539f5e
 
 ###
 
-# POST /users
 # DELETE /users/id
+DELETE http://localhost:3000/users/ HTTP/1.1 content-type: applicatoin json
+
+###
 
 
 #############################################################################
@@ -69,25 +131,67 @@ GET http://localhost:3000/users/62cd4c88a71e3efc07539f5e
 #############################################################################
 
 # GET /agencies
+GET https://fp-matching-game.herokuapp.com/agencies
+
+###
 # GET /agencies/id
+GET https://fp-matching-game.herokuapp.com/agencies/62ca126f58b7be242b7bc42e
+
+###
+
 # POST /agencies
 # PUT /agencies/id
 # DELETE /agencies/id
 
 # GET /cases
+GET https://fp-matching-game.herokuapp.com/cases
+
+###
+
 # GET /cases/id
+GET https://fp-matching-game.herokuapp.com/localhost:3000/cases/62c66c6f4a0bc42c6b517f39
+
+###
+
 # POST /cases
+
+###
+
 # PUT /cases/id
+
+###
+
 # DELETE /cases/id
 
+###
+
 # GET /scores
+GET https://fp-matching-game.herokuapp.com/scores
+
+###
+
 # GET /scores/id
-# POST /scores
-# PUT /scores/id
+GET https://fp-matching-game.herokuapp.com/scores/62cee21254fed75a4fa1c369
+
+###
+
 # DELETE /scores/id
 
 # GET /profile
+GET https://fp-matching-game.herokuapp.com/profile
+
+###
+
 # GET /users
+GET https://fp-matching-game.herokuapp.com/users
+
+###
+
 # GET /users/id
-# POST /users
+GET https://fp-matching-game.herokuapp.com/users/62cee10454fed75a4fa1c355
+
+###
+
 # DELETE /users/id
+
+###
