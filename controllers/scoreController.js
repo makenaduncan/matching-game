@@ -88,7 +88,7 @@ const deleteScoreWithID = async (req, res) => {
 
   try {
     await res.score.deleteOne();
-    res.status(200).json({ message: "Delete Successful." });
+    res.status(204).send();
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
