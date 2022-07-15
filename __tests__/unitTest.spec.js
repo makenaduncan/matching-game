@@ -52,4 +52,11 @@ describe("User Test Suite", () => {
       .send(body);
     expect(response.statusCode).toBe(302);
   });
+
+  it("test delete /:id endpoints", async () => {
+    const response = await request(
+      "https://fp-matching-game.herokuapp.com"
+    ).delete("/scores/62cd54f5f7bde0bcf0dcd79f");
+    expect(response.statusCode).toBe(200);
+  });
 });
