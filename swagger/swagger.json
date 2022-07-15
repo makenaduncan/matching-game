@@ -470,9 +470,6 @@
               "properties": {
                 "name": {
                   "example": "Tom Holland"
-                },
-                "email": {
-                  "example": "thollandswag@gmail.com"
                 }
               }
             }

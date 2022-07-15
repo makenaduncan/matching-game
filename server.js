@@ -109,7 +109,7 @@ app.use((req, res, next) => {
 // Use json and also require index file that will reference all other route files.
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/", requiresAuth(), require("./routes/index"));
+app.use("/", require("./routes/index"));
 
 mongodb.connectDB();
 

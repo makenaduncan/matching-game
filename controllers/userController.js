@@ -89,10 +89,6 @@ const updateUser = async (req, res) => {
     res.user.name = req.body.name;
   }
 
-  if (req.body.email != null) {
-    res.user.email = req.body.email;
-  }
-
   try {
     const updatedUser = await res.user.save();
 
