@@ -1,6 +1,7 @@
 const url = require("url");
 const Score = require("../models/score");
 const User = require("../models/user");
+const Validator = require('validatorjs');
 
 
 const getScores = async (req, res) => {
@@ -9,7 +10,6 @@ const getScores = async (req, res) => {
   try {
     // Save queries made by front end
     const queryObject = req.query;
-    console.log(queryObject);
 
     // Pass in email as username to get
     scores = await getAllScores();
@@ -34,17 +34,18 @@ const getScores = async (req, res) => {
 };
 
 const createScores = async (req, res) => {
-  // #swagger.tags = ['Score']
-  // #swagger.description = 'Create score item and add to collection'
 
   const score = new Score({
     username: req.oidc.user.email,
     score: req.body.score,
   });
+  
 
   try {
-    const newScoreItem = await score.save();
-    res.status(201).json(newScoreItem);
+
+      const newScoreItem = await score.save();
+      res.status(201).json(newScoreItem);
+
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -114,6 +115,32 @@ async function getScoreById(req, res, next) {
   next();
 }
 
+function validateScore(req, res, next) {
+
+  let score = new Score({
+
+      username: req.oidc.user.email,
+      score: req.body.score
+  });
+
+  // validatorjs will not validate models. Have to convert to object.
+  scoreObject = score.toObject();
+
+  const rules = {
+    username: 'required|string|email',
+    score: 'required|integer|min:0'
+  }
+
+  const validation = new Validator(scoreObject, rules);
+
+  if (validation.fails())
+  {
+    return res.status(400).json({message: validation.errors});
+  }
+
+  next();
+}
+
 // Internal Private helper function
 async function getAllScores() {
   scores = await Score.find();
@@ -139,5 +166,6 @@ module.exports = {
   createScores,
   getScoreWithID,
   deleteScoreWithID,
-  getScoreById
+  getScoreById,
+  validateScore
 };

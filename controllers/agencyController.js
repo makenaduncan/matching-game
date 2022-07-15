@@ -1,4 +1,4 @@
-const url = require('url');
+const Validator = require('validatorjs');
 const Agency = require('../models/agency');
 
 
@@ -141,11 +141,44 @@ async function getAllAgencies()
     return agencies;
 }
 
+function validateAgency(req, res, next) {
+
+    let agency = new Agency({
+
+        name: req.body.name,
+        supervisor: req.body.supervisor,
+        supervisorRank: req.body.supervisorRank,
+        phone: req.body.phone,
+        email: req.body.email
+    });
+  
+    // validatorjs will not validate models. Have to convert to object.
+    agencyObject = agency.toObject();
+  
+    const rules = {
+      name: 'required|string|min:3',
+      supervisor: 'required|string|min:3',
+      supervisorRank: 'required|string|min:3',
+      phone: ['required', 'regex:/^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/'],
+      email: 'required|email'
+    }
+  
+    const validation = new Validator(agencyObject, rules);
+  
+    if (validation.fails())
+    {
+      return res.status(400).json({message: validation.errors});
+    }
+  
+    next();
+}
+
 module.exports = {
     getAgencies,
     createAgencies,
     getAgency,
     deleteAgency,
     updateAgency,
-    getAgencyById
+    getAgencyById,
+    validateAgency
 }

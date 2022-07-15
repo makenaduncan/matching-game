@@ -9,7 +9,7 @@ const agencies = require('../controllers/agencyController');
 router.get('/agencies', agencies.getAgencies);
 
 // /scores POST
-router.post('/agencies', requiresAuth(), agencies.createAgencies);
+router.post('/agencies', requiresAuth(), agencies.validateAgency, agencies.createAgencies);
 
 // /scores/{id} GET
 router.get('/agencies/:id', agencies.getAgencyById, agencies.getAgency);
@@ -18,7 +18,7 @@ router.get('/agencies/:id', agencies.getAgencyById, agencies.getAgency);
 router.delete('/agencies/:id', requiresAuth(), agencies.getAgencyById, agencies.deleteAgency);
 
 // /scores/{id} UPDATE
-router.put('/agencies/:id', requiresAuth(), agencies.getAgencyById, agencies.updateAgency);
+router.put('/agencies/:id', requiresAuth(), agencies.getAgencyById, agencies.validateAgency, agencies.updateAgency);
 
 
 module.exports = router;

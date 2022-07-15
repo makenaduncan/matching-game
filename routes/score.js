@@ -8,7 +8,7 @@ const scores = require("../controllers/scoreController");
 router.get("/scores", scores.getScores);
 
 // /scores POST
-router.post("/scores", requiresAuth(), scores.createScores);
+router.post("/scores", requiresAuth(), scores.validateScore, scores.createScores);
 
 // /scores/{id} GET
 router.get("/scores/:id", scores.getScoreById, scores.getScoreWithID);
