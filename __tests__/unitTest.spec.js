@@ -31,4 +31,25 @@ describe("User Test Suite", () => {
       .send(body);
     expect(response.statusCode).toBe(302);
   });
+
+  it("test post /scores endpoints", async () => {
+    const body = {
+      score: "829",
+    };
+    const response = await request("https://fp-matching-game.herokuapp.com")
+      .post("/scores")
+      .send(body);
+    expect(response.statusCode).toBe(302);
+  });
+
+  it("test post /users endpoints", async () => {
+    const body = {
+      name: "Jason Borne",
+      email: "JBorne@email.com",
+    };
+    const response = await request("https://fp-matching-game.herokuapp.com")
+      .post("/users")
+      .send(body);
+    expect(response.statusCode).toBe(302);
+  });
 });
