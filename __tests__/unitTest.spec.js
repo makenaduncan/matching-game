@@ -57,6 +57,27 @@ describe("User Test Suite", () => {
     const response = await request(
       "https://fp-matching-game.herokuapp.com"
     ).delete("/scores/62cd54f5f7bde0bcf0dcd79f");
-    expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(302);
+  });
+
+  it("test delete /:id endpoints", async () => {
+    const response = await request(
+      "https://fp-matching-game.herokuapp.com"
+    ).delete("/users/62d1ef005f6519bd6ce8f304");
+    expect(response.statusCode).toBe(302);
+  });
+
+  it("test delete /:id endpoints", async () => {
+    const response = await request(
+      "https://fp-matching-game.herokuapp.com"
+    ).delete("/agencies/");
+    expect(response.statusCode).toBe(302);
+  });
+
+  it("test delete /:id endpoints", async () => {
+    const response = await request(
+      "https://fp-matching-game.herokuapp.com"
+    ).delete("/cases/");
+    expect(response.statusCode).toBe(302);
   });
 });
