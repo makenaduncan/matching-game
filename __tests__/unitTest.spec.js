@@ -70,14 +70,14 @@ describe("User Test Suite", () => {
   it("test delete /:id endpoints", async () => {
     const response = await request(
       "https://fp-matching-game.herokuapp.com"
-    ).delete("/agencies/");
+    ).delete("/agencies/776fghfjguy8888");
     expect(response.statusCode).toBe(302);
   });
 
   it("test delete /:id endpoints", async () => {
     const response = await request(
       "https://fp-matching-game.herokuapp.com"
-    ).delete("/cases/");
+    ).delete("/cases/7h90987766bjjjjkk");
     expect(response.statusCode).toBe(302);
   });
 });
