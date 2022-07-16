@@ -47,9 +47,10 @@ describe("User Test Suite", () => {
   // });
 
   it("test get /:users endpoints", async () => {
-    const response = await request("http://localhost:3000").get(
-      "/users/62ce8a8f1238811db0b1cfb4"
-    );
+    const response = await request(
+      "https://fp-matching-game.herokuapp.com"
+    ).get("/users/62ce8a8f1238811db0b1cfb4");
+    console.log(response.body);
     expect(response.body).toEqual({
       _id: "62ce8a8f1238811db0b1cfb4",
       name: "Moses Family",

@@ -5,7 +5,7 @@
     "description": "API endpoints to retrieve information such as cold case data, matching game score list, and game information.",
     "version": "1.0.0"
   },
-  "host": ["localhost:3000"],
+  "host": ["fp-matching-game.herokuapp.com"],
   "basePath": "/",
   "tags": [
     {
@@ -32,26 +32,26 @@
         "tags": ["Cold Case File"],
         "description": "Get all cold cases in the collection",
         "parameters": [
-          {  
-            "name":"caseType",
-            "in":"query",
-            "description":"The case can be fetched using a Case Type. EX: Homicide; Unknown; Missing Persons, etc.",
-            "required":false,
-            "type":"string"
+          {
+            "name": "caseType",
+            "in": "query",
+            "description": "The case can be fetched using a Case Type. EX: Homicide; Unknown; Missing Persons, etc.",
+            "required": false,
+            "type": "string"
           },
-          {  
-            "name":"caseDate",
-            "in":"query",
-            "description":"Case can be fetched from a date parameter. EX: 2022-10-15",
-            "required":false,
-            "type":"string"
+          {
+            "name": "caseDate",
+            "in": "query",
+            "description": "Case can be fetched from a date parameter. EX: 2022-10-15",
+            "required": false,
+            "type": "string"
           },
-          {  
-            "name":"caseStatus",
-            "in":"query",
-            "description":"Displaying cases by status. EX: Solved; Unsolved.",
-            "required":false,
-            "type":"string"
+          {
+            "name": "caseStatus",
+            "in": "query",
+            "description": "Displaying cases by status. EX: Solved; Unsolved.",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
@@ -244,19 +244,19 @@
         "tags": ["Score"],
         "description": "Retrieve all scores from the collection.",
         "parameters": [
-          {  
-            "name":"username",
-            "in":"query",
-            "description":"Can filter documents in collection down to specific user. Use Email address for this. EX: chsmoses@gmail.com",
-            "required":false,
-            "type":"string"
+          {
+            "name": "username",
+            "in": "query",
+            "description": "Can filter documents in collection down to specific user. Use Email address for this. EX: chsmoses@gmail.com",
+            "required": false,
+            "type": "string"
           },
-          {  
-            "name":"ranking",
-            "in":"query",
-            "description":"Filters and returns a specific ranking in the score collection. EX: 5",
-            "required":false,
-            "type":"string"
+          {
+            "name": "ranking",
+            "in": "query",
+            "description": "Filters and returns a specific ranking in the score collection. EX: 5",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
@@ -502,33 +502,33 @@
         "tags": ["Agency Information"],
         "description": "Get a list of all agencies and their information.",
         "parameters": [
-          {  
-            "name":"name",
-            "in":"query",
-            "description":"Pass in a specific Agency name to filter just those agency details. EX: Smith County Sheriff’s Department",
-            "required":false,
-            "type":"string"
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Pass in a specific Agency name to filter just those agency details. EX: Smith County Sheriff’s Department",
+            "required": false,
+            "type": "string"
           },
-          {  
-            "name":"phone",
-            "in":"query",
-            "description":"If you know the phone number of an agency, use that to pull up that agency's details. EX:215-685-7458",
-            "required":false,
-            "type":"string"
+          {
+            "name": "phone",
+            "in": "query",
+            "description": "If you know the phone number of an agency, use that to pull up that agency's details. EX:215-685-7458",
+            "required": false,
+            "type": "string"
           },
-          {  
-            "name":"supervisor",
-            "in":"query",
-            "description":"Pass in the person in charge of the cold case to pull up the agency information. EX: Jason Kocovsky",
-            "required":false,
-            "type":"string"
+          {
+            "name": "supervisor",
+            "in": "query",
+            "description": "Pass in the person in charge of the cold case to pull up the agency information. EX: Jason Kocovsky",
+            "required": false,
+            "type": "string"
           },
-          {  
-            "name":"supervisorRank",
-            "in":"query",
-            "description":"If you want to find all agencies with a specific rank, enter the rank here. EX: Detective; Lieutenant; Civillian Investigator; etc.",
-            "required":false,
-            "type":"string"
+          {
+            "name": "supervisorRank",
+            "in": "query",
+            "description": "If you want to find all agencies with a specific rank, enter the rank here. EX: Detective; Lieutenant; Civillian Investigator; etc.",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
