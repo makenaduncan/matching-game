@@ -1,6 +1,6 @@
 const request = require("supertest");
 describe("User Test Suite", () => {
-  it("test get /:username endpoints", async () => {
+  it("test get /:agencies endpoints", async () => {
     const response = await request(
       "https://fp-matching-game.herokuapp.com"
     ).get("/agencies/62ca126f58b7be242b7bc42e");
@@ -12,6 +12,56 @@ describe("User Test Suite", () => {
       email: "dturner@smith-county.com",
       __v: 0,
       "'supervisorRank": "Civillian Investigator",
+    });
+    expect(response.statusCode).toBe(200);
+  });
+
+  it("test get /:scores endpoints", async () => {
+    const response = await request(
+      "https://fp-matching-game.herokuapp.com"
+    ).get("/scores/62d1911e82ab6c6964d9bda5");
+    expect(response.body).toEqual({
+      _id: "62d1911e82ab6c6964d9bda5",
+      username: "chsmoses@gmail.com",
+      score: 23,
+      __v: 0,
+    });
+    expect(response.statusCode).toBe(200);
+  });
+
+  // it("test get /:users endpoints", async () => {
+  //   const response = await request(
+  //     "https://fp-matching-game.herokuapp.com"
+  //   ).get("/users/62d1ef005f6519bd6ce8f304");
+  //   expect(response.body).toEqual({
+  //     _id: "6262d1ef005f6519bd6ce8f304",
+  //     name: "Test User",
+  //     email: "fakeuser@gmail.com",
+  //     creationDate: "2022-07-15T22:49:36.513+00:00",
+  //     lastLogin: "2022-07-15T22:49:36.513+00:00",
+  //     gamesCompleted: 0,
+  //     highestScore: 0,
+  //     __v: 0,
+  //   });
+  //   expect(response.statusCode).toBe(200);
+  // });
+
+  it("test get /:users endpoints", async () => {
+    const response = await request("http://localhost:3000").get(
+      "/users/62ce8a8f1238811db0b1cfb4"
+    );
+    expect(response.body).toEqual({
+      _id: "62ce8a8f1238811db0b1cfb4",
+      name: "Moses Family",
+      email: "moseai04@gmail.com",
+      picture:
+        "https://lh3.googleusercontent.com/a/AItbvmnr2qrx1EvJAzbPx1OODATr1sa90wp7d6s465UA=s96-c",
+      creationDate: "2022-07-13T09:04:15.385+00:00",
+      lastLogin: "2022-07-13T09:05:15.764+00:00",
+      gamesCompleted: 4,
+      highestScore: 340323,
+      isEmailVerified: "True",
+      __v: 0,
     });
     expect(response.statusCode).toBe(200);
   });
