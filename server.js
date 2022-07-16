@@ -2,10 +2,10 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const mongodb = require("./db/mongoConnect");
-const { requiresAuth } = require("express-openid-connect");
 const port = process.env.PORT || 3000;
 const cors = require("cors");
 const User = require("./models/user");
+const Validator = require('validatorjs');
 
 const { auth } = require("express-openid-connect");
 
@@ -82,7 +82,7 @@ app.use((req, res, next) => {
     }
     
     // If user does not exist in the database, create the user and store it.
-    newUser = new User ({
+    const newUser = new User ({
 
       name: req.oidc.user.name,
       email: req.oidc.user.email,
@@ -94,13 +94,41 @@ app.use((req, res, next) => {
       isEmailVerified: req.oidc.user.email_verified
     });
 
-    try {
-      saveUserItem = await newUser.save();
-      req.user = saveUserItem;
-      console.log("User " + req.oidc.user.name + " created successfully!");
+    const newUserObject = newUser.toObject();
 
+    let rules = ({
+
+      name: 'required|string|min:3',
+      email: 'required|email',
+      picture: 'string',
+      creationDate: 'required|date',
+      lastLogin: 'required|date',
+      gamesCompleted: 'required|integer|min:0',
+      highestScore: 'required|integer|min:0',
+      isEmailVerified: 'required|boolean'
+    })
+
+    
+    let validator = new Validator(newUserObject, rules);
+
+
+
+    try {
+      if (validator.passes())
+      {
+        saveUserItem = await newUser.save();
+        req.user = saveUserItem;
+        console.log("User " + req.oidc.user.name + " created successfully!");
+      }
+      else
+      {
+        console.log(validator.errors);
+        return;
+      }
+      
     } catch(err) {
       console.log("ERR: User was not created.")
+      return;
     }
 
   }

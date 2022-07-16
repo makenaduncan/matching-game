@@ -387,6 +387,9 @@
                 },
                 "email": {
                   "example": "iamtomhanks@gmail.com"
+                },
+                "picture": {
+                  "example": "https://lh3.googleusercontent.com/a/AItbvmlhPNxd42Bgth5ci7RWd8zun02EdpPgtu9Ocdf2=s96-c"
                 }
               }
             }
@@ -470,6 +473,9 @@
               "properties": {
                 "name": {
                   "example": "Tom Holland"
+                },
+                "picture": {
+                  "example": "https://lh3.googleusercontent.com/a/AItbvmlhPNxd42Bgth5ci7RWd8zun02EdpPgtu9Ocdf2=s96-c"
                 }
               }
             }

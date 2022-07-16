@@ -1,5 +1,5 @@
-const Score = require("../models/score");
 const User = require("../models/user");
+const Validator = require('validatorjs');
 
 
 const getProfile = async (req, res) => {
@@ -121,6 +121,47 @@ async function getUserById(req, res, next) {
   next();
 }
 
+function validateUser(req, res, next) {
+
+  let user = new User({
+
+    name: req.body.name,
+    email: req.body.email,
+    picture: req.body.picture,
+    creationDate: date,
+    lastLogin: date,
+    gamesCompleted: 0, // Can't complete games if you haven't created an account yet!
+    highestScore: 0 // No scores yet. scoreController handles updating this during score creation.
+});
+
+// validatorjs will not validate models. Have to convert to object.
+userObject = user.toObject();
+
+const rules = {
+  name: 'required|string|min:3',
+  email: 'email',
+  picture: 'string',
+  creationDate: 'date',
+  lastLogin: 'date',
+  gamesCompleted: 'integer|min:0',
+  highestScore: 'integer|min:0'
+}
+
+const validation = new Validator(userObject, rules);
+
+if (validation.fails())
+{
+  return res.status(400).json({message: validation.errors});
+}
+
+next();
+
+
+
+
+
+}
+
 // Internal Private helper function
 async function getAllUsers() {
 
@@ -137,4 +178,5 @@ module.exports = {
   deleteUser,
   updateUser,
   getUserById,
+  validateUser
 };

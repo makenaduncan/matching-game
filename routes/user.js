@@ -12,7 +12,7 @@ router.get('/profile', requiresAuth(), users.getProfile)
 router.get('/users', requiresAuth(), users.getUsers);
 
 // /scores POST
-router.post('/users', requiresAuth(), users.createUser);
+router.post('/users', requiresAuth(), users.validateUser, users.createUser);
 
 // /scores/{id} GET
 router.get('/users/:id', requiresAuth(), users.getUserById, users.getUser);
@@ -20,4 +20,5 @@ router.get('/users/:id', requiresAuth(), users.getUserById, users.getUser);
 // /scores/{id} DELETE
 router.delete('/users/:id', requiresAuth(), users.getUserById, users.deleteUser);
 
+router.put('/users/:id', requiresAuth(), users.getUserById, users.validateUser, users.updateUser)
 module.exports = router;
