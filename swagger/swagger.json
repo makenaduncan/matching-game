@@ -216,7 +216,7 @@
                 "websiteUrl": {
                   "example": "https://dnadoeproject.org/case/rock-co-john-doe-1981/"
                 },
-                "agencyInformation (ObjectID as string)": {
+                "agencyInformation": {
                   "example": "62c6594f19deccde1e79c40d"
                 }
               }

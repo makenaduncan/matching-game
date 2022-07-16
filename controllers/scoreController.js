@@ -83,8 +83,6 @@ const getScoreWithID = async (req, res) => {
 };
 
 const deleteScoreWithID = async (req, res) => {
-  // #swagger.tags = ['Score']
-  // #swagger.description = 'Get score item in collection based on ID'
 
   try {
     await res.score.deleteOne();

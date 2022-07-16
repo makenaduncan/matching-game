@@ -111,8 +111,6 @@ app.use((req, res, next) => {
     
     let validator = new Validator(newUserObject, rules);
 
-
-
     try {
       if (validator.passes())
       {

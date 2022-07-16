@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const caseSchema = new mongoose.Schema({
   caseName: String,
-  summariedCaseDescription: String,
+  summarizedCaseDescription: String,
   caseType: String,
   victimPicture: String,
   victimName: String,

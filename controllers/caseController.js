@@ -1,5 +1,6 @@
 const Case = require('../models/case');
 const Agency = require('../models/agency');
+const Validator = require('validatorjs');
 
 
 const getCases = async (req, res) => {
@@ -169,6 +170,50 @@ async function getCaseById(req, res, next) {
     next();
 }
 
+function validateCase(req, res, next) {
+
+    let newCase = new Case({
+
+        caseName: req.body.caseName,
+        caseType: req.body.caseType,
+        victimPicture: req.body.victimPicture,
+        victimName: req.body.victimName,
+        victimAge: req.body.victimAge,
+        caseDate: req.body.caseDate,
+        location: req.body.location,
+        caseStatus: req.body.caseStatus,
+        websiteUrl: req.body.websiteUrl,
+        agencyInformation: req.body.agencyInformation,
+        summarizedCaseDescription: req.body.summarizedCaseDescription
+    });
+    
+    // validatorjs will not validate models. Have to convert to object.
+    caseObject = newCase.toObject();
+    
+    const rules = {
+      caseName: 'required|string|min:3',
+      summarizedCaseDescription: 'required|string',
+      caseType: 'required|string',
+      victimPicture: 'required|string',
+      victimAge: 'required|string',
+      caseDate: 'required|date',
+      location: 'required|string',
+      caseStatus: 'required|string',
+      websiteUrl: 'required|url',
+      agencyInformation: 'required'
+    }
+    
+    const validation = new Validator(caseObject, rules);
+    
+    if (validation.fails())
+    {
+      return res.status(400).json({message: validation.errors});
+    }
+    
+    next();
+
+}
+
 async function getAllCases()
 {
     cases = await Case.find()
@@ -183,5 +228,6 @@ module.exports = {
     getCase,
     deleteCase,
     updateCase,
-    getCaseById
+    getCaseById,
+    validateCase
 }

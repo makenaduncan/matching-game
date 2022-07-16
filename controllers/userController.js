@@ -29,11 +29,6 @@ const getUsers = async (req, res) => {
 
     var result = users;
 
-    // // Query
-    // if (queryObject.ranking != null) {
-    //   result = scores.filter((item) => item.ranking == queryObject.ranking);
-    // }
-
     res.status(200).json(result);
   } catch (err) {
     res.status(500).json({ message: err.message });
