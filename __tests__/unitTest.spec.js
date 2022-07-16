@@ -29,24 +29,6 @@ describe("User Test Suite", () => {
     expect(response.statusCode).toBe(200);
   });
 
-  // it("test get /:users endpoints", async () => {
-  //   const response = await request(
-  //     "https://fp-matching-game.herokuapp.com"
-  //   ).get("/users/62d1ef005f6519bd6ce8f304");
-  //   console.log(response.statusCode);
-  //   expect(response.body).toEqual({
-  //     _id: "62d1ef005f6519bd6ce8f304",
-  //     name: "Test User",
-  //     email: "fakeuser@gmail.com",
-  //     creationDate: "2022-07-15T22:49:36.513+00:00",
-  //     lastLogin: "2022-07-15T22:49:36.513+00:00",
-  //     gamesCompleted: 0,
-  //     highestScore: 0,
-  //     __v: 0,
-  //   });
-  //   expect(response.statusCode).toBe(302);
-  // });
-
   it("test post /agencies endpoints", async () => {
     const body = {
       name: "Police Department",
@@ -56,6 +38,20 @@ describe("User Test Suite", () => {
     };
     const response = await request("https://fp-matching-game.herokuapp.com")
       .post("/agencies")
+      .send(body);
+    expect(response.statusCode).toBe(302);
+  });
+
+  it("test put /:agencies endpoints", async () => {
+    const body = {
+      _id: "62d25ffdb3a026982efec1f7",
+      name: "Police Department",
+      supervisor: "John Borne",
+      phone: "111-000-0000",
+      email: "jborne@email.com",
+    };
+    const response = await request("https://fp-matching-game.herokuapp.com")
+      .put("/agencies/62d25ffdb3a026982efec1f7")
       .send(body);
     expect(response.statusCode).toBe(302);
   });
@@ -79,6 +75,26 @@ describe("User Test Suite", () => {
     expect(response.statusCode).toBe(302);
   });
 
+  it("test put /:cases endpoints", async () => {
+    const body = {
+      _id: "62cc38c3c4e0a606952e9ac5",
+      caseName: "Bayonne Jane Doe",
+      caseType: "Suspected Homicide",
+      victimPicture: "unavailable",
+      victimName: "unknown",
+      victimAge: "20",
+      caseDate: "2007-10-18T00:00:00.000+00:00",
+      location: "Bayonne, New Jersey",
+      caseStatus: "unsolved",
+      websiteURL: "https://dnadoeproject.org/case/bayonne-jane-doe-2007/",
+      agencyInformation: "62ca1c9858b7be242b7bc44c",
+    };
+    const response = await request("https://fp-matching-game.herokuapp.com")
+      .put("/agencies/62cc38c3c4e0a606952e9ac5")
+      .send(body);
+    expect(response.statusCode).toBe(302);
+  });
+
   it("test post /scores endpoints", async () => {
     const body = {
       score: "829",
@@ -96,6 +112,18 @@ describe("User Test Suite", () => {
     };
     const response = await request("https://fp-matching-game.herokuapp.com")
       .post("/users")
+      .send(body);
+    expect(response.statusCode).toBe(302);
+  });
+
+  it("test put /users endpoints", async () => {
+    const body = {
+      _id: "62d1ef005f6519bd6ce8f304",
+      name: "Jason Borne",
+      email: "JBorne@email.com",
+    };
+    const response = await request("https://fp-matching-game.herokuapp.com")
+      .put("/users/62d1ef005f6519bd6ce8f304")
       .send(body);
     expect(response.statusCode).toBe(302);
   });
