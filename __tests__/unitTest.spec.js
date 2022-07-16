@@ -1,5 +1,21 @@
 const request = require("supertest");
 describe("User Test Suite", () => {
+  it("test get /:username endpoints", async () => {
+    const response = await request(
+      "https://fp-matching-game.herokuapp.com"
+    ).get("/agencies/62ca126f58b7be242b7bc42e");
+    expect(response.body).toEqual({
+      _id: "62ca126f58b7be242b7bc42e",
+      name: "Smith County Sheriff’s Department",
+      supervisor: "David Turner",
+      phone: "903-590-2696",
+      email: "dturner@smith-county.com",
+      __v: 0,
+      "'supervisorRank": "Civillian Investigator",
+    });
+    expect(response.statusCode).toBe(200);
+  });
+
   it("test post /agencies endpoints", async () => {
     const body = {
       name: "Police Department",
