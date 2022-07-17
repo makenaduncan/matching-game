@@ -53,7 +53,11 @@ const createCases = async (req, res) => {
     // Load agency information based on ID of agency.
     agency = await Agency.findById(req.body.agencyInformation);
 
-    Newcase.agencyInformation = agency._id;
+    if (agency != null)
+    {
+        Newcase.agencyInformation = agency._id;
+    }
+    
 
     try {
         const newCaseItem = await Newcase.save();
